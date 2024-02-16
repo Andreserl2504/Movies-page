@@ -1,5 +1,12 @@
-import { Button } from "@material-tailwind/react";
+import { NavBar } from './components/NavBar'
+import { Home } from './Pages/Home'
+
 
 export function App() {
-  return <Button>alsjkdlajksd</Button>
+  return (
+    <>
+      <NavBar />
+      <Home/>
+    </>
+  )
 }
