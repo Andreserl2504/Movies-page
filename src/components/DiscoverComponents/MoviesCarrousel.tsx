@@ -1,6 +1,6 @@
 import { Carousel } from '@material-tailwind/react'
 import { CarrouselElement } from './CarrouselElement'
-import { CarruselElementInfo } from '../Types/Discover'
+import { CarruselElementInfo } from '../../Types/Discover'
 
 export function MoviesCarrousel({ genre, carrouselInfo }: { genre: string, carrouselInfo: CarruselElementInfo[] }) {
   

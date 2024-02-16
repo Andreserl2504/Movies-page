@@ -1,7 +1,7 @@
-import { carruselElementInfo } from '../Types/Discover'
+import { CarruselElementInfo } from '../../Types/Discover'
 import { Rating } from '@material-tailwind/react'
 
-export function CarrouselElement({ title, poster }: carruselElementInfo) {
+export function CarrouselElement({ title, poster }: CarruselElementInfo) {
   return (
     <div className='flex gap-3 relative w-full max-w-[342.72px] h-40'>
       <img src={poster} alt='image 1' className=' h-40 object-cover' />

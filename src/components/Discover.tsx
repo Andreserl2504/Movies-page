@@ -1,5 +1,5 @@
 import { Input } from '@material-tailwind/react'
-import { MoviesCarrousel } from './MoviesCarrousel'
+import { MoviesCarrousel } from './DiscoverComponents/MoviesCarrousel'
 import { CarruselInfo } from '../Types/Discover'
 import { SearchPreview } from './DiscoverComponents/SearchPreview'
 import { useSearchMovie } from '../hooks/useSearchMovie'
