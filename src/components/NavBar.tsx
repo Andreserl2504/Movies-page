@@ -1,6 +1,6 @@
 import { Navbar } from '@material-tailwind/react'
-import { Logo } from '../icons/Logo'
-import { HomeIcon, ProfileIcon } from '../icons/TwitterIcons'
+import { Logo } from './icons/Logo'
+import { HomeIcon, ProfileIcon } from './icons/TwitterIcons'
 import { AvatarProfile } from './Avatar'
 
 export function NavBar() {
@@ -10,9 +10,9 @@ export function NavBar() {
       blurred={false} placeholder={undefined}    >
       <div className='h-full min-w-12 flex flex-col justify-between'>
         <div className='flex flex-wrap min-w-12 gap-7 p-3'>
-          <Logo className=' w-full' />
-          <HomeIcon className=' w-full' />
-          <ProfileIcon className=' w-full' />
+          <Logo className=' w-12' />
+          <HomeIcon className=' w-12' />
+          <ProfileIcon className=' w-12' />
         </div>
         <div className='flex justify-center items-center'>
           <AvatarProfile className='px-auto' />

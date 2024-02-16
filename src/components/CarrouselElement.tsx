@@ -1,4 +1,4 @@
-import { carruselElementInfo } from '../Types/CarrouselTypes'
+import { carruselElementInfo } from '../Types/Discover'
 import { Rating } from '@material-tailwind/react'
 
 export function CarrouselElement({ title, poster }: carruselElementInfo) {
