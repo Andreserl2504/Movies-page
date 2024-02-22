@@ -3,11 +3,11 @@ import { Rating } from '@material-tailwind/react'
 
 export function CarrouselElement({ title, poster }: CarruselElementInfo) {
   return (
-    <div className='flex gap-3 relative w-full max-w-[342.72px] h-40'>
+    <div className='flex gap-3 relative max-w-[342.72px] h-40'>
       <img src={poster} alt='image 1' className=' h-40 object-cover' />
       <div className='p-5'>
         <div>
-          <strong className=' '>{title}</strong>
+          <strong className=''>{title}</strong>
         </div>
         <div className='flex flex-col absolute justify-between h-16'>
           <div>

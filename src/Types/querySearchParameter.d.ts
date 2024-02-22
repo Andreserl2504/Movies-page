@@ -1,3 +1,5 @@
+import { imdbID } from "./GeneralTypes";
+
 export type MoviesFetch = {
     Search:       Search[];
     totalResults: string;
@@ -7,7 +9,7 @@ export type MoviesFetch = {
 export type Search = {
     Title:  string;
     Year:   string;
-    imdbID: string;
+    imdbID: imdbID;
     Type:   Type;
     Poster: string;
 }

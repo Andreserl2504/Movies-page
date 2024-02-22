@@ -3,9 +3,6 @@ import { CarrouselElement } from './CarrouselElement'
 import { CarruselElementInfo } from '../../Types/Discover'
 
 export function MoviesCarrousel({ genre, carrouselInfo }: { genre: string, carrouselInfo: CarruselElementInfo[] }) {
-  
-  
-
   return (
     <div className=' flex flex-wrap gap-3  py-5'>
       <div className='flex items-center h-8 border-b-2'>

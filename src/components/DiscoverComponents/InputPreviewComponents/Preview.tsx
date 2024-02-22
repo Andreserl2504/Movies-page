@@ -1,4 +1,4 @@
-import { Search } from '../../Types/querySearchParameter'
+import { Search } from '../../../Types/querySearchParameter'
 
 export function Preview({ info }: { info: Search[] }) {
   return (

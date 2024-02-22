@@ -1,6 +1,6 @@
 import { Search } from '../../Types/querySearchParameter'
-import { IsError } from '../InputPreviewComponents/IsError'
-import { Preview } from '../InputPreviewComponents/Preview'
+import { IsError } from './InputPreviewComponents/IsError'
+import { Preview } from './InputPreviewComponents/Preview'
 
 export function SearchPreview({
   info,
