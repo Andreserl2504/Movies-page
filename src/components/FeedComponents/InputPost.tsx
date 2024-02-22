@@ -1,4 +1,4 @@
-import { AvatarProfile } from './Avatar'
+import { AvatarProfile } from '../Avatar'
 import { Input, Progress, Button } from '@material-tailwind/react'
 import { useState } from 'react'
 
