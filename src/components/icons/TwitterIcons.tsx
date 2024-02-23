@@ -1,4 +1,4 @@
-export function HomeIcon({ className }: { className: string }) {
+export function HomeIcon({ className }: { className?: string }) {
   return (
     <svg viewBox='0 0 24 24' aria-hidden='true' className={className}>
       <g>
@@ -8,7 +8,7 @@ export function HomeIcon({ className }: { className: string }) {
   )
 }
 
-export function ProfileIcon({ className }: { className: string }) {
+export function ProfileIcon({ className }: { className?: string }) {
   return (
     <svg viewBox='0 0 24 24' aria-hidden='true' className={className ?? ''}>
       <g>
