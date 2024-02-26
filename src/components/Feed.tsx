@@ -1,11 +1,9 @@
-import { useContext } from 'react'
-import { UserContext } from '../Context/User'
 import { InputPost } from './FeedComponents/InputPost'
 import { NoInputPost } from '../components/FeedComponents/NoInputPost'
+import { useUser } from '../hooks/useUser'
 
 export function Feed() {
-  const { userInfo } = useContext(UserContext)
-  console.log(userInfo)
+  const { userInfo } = useUser()
   return (
     <div className=' min-w-[600px] border-x-2'>
       <div>{userInfo.userID !== null ? <InputPost /> : <NoInputPost />}</div>

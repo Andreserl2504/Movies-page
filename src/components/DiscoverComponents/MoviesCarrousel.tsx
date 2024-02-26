@@ -14,7 +14,7 @@ export function MoviesCarrousel({ genre, carrouselInfo }: { genre: string, carro
         loop={true}
         placeholder={undefined}
         navigation={({ setActiveIndex, activeIndex, length }) => (
-          <div className='absolute bottom-4 left-2/4 z-50 flex  gap-2'>
+          <div className='absolute bottom-4 left-2/4 z-10 flex  gap-2'>
             {new Array(length).fill('').map((_, i) => (
               <span
                 key={i}

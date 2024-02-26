@@ -6,7 +6,8 @@ import { userRouter } from './server/Router/userRouter.js'
 const app = express()
 const PORT = process.env.PORT ?? 3000
 
-app.use('/user', userRouter)
+app.use(express.json())
+app.use('/server/user', userRouter)
 
 app.listen(PORT, () => {
   console.log(pc.bgBlue('Server is running'))

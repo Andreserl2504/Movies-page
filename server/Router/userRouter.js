@@ -1,3 +1,8 @@
-import { Router } from "express";
+import { Router } from 'express'
 
-export const userRouter = Router() 
+export const userRouter = Router()
+
+userRouter.post('/', (req, res) => {
+  console.log(req.body)
+  res.json(req.body)
+})
