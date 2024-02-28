@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { userController } from '../controllers/userController.js'
+import { UserController } from '../controllers/UserController.js'
 
 
 export const userRouter = Router()
 
-userRouter.post('/', (req, res) => userController.logSingUserController(req, res))
+userRouter.post('/', (req, res) => UserController.logSingUserController(req, res))

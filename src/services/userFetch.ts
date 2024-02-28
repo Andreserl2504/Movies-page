@@ -1,13 +1,18 @@
-import { UserInfoType } from '../Types/User'
+import { FetchUserParameter, UserInfoType } from '../Types/User'
 
-export async function userFetch(data: UserInfoType | undefined) {
-  if (data !== undefined) {
-    return fetch('/server/user', {
+export async function userFetch(
+  serverURL: string,
+  data: UserInfoType | undefined,
+  param: FetchUserParameter
+) {
+  if (data?.userID) {
+    const toServer = { userData: data, params: param }
+    return fetch(serverURL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(toServer)
     })
       .then((response) => {
         if (response.ok) {

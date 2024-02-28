@@ -7,7 +7,7 @@ const app = express()
 const PORT = process.env.PORT ?? 3000
 
 app.use(express.json())
-app.use('/server/user', userRouter)
+app.use('/server/user/', userRouter)
 
 app.listen(PORT, () => {
   console.log(pc.bgBlue('Server is running'))

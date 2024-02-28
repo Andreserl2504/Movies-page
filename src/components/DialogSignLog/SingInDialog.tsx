@@ -8,7 +8,7 @@ import {
   Checkbox
 } from '@material-tailwind/react'
 import { Dispatch, SetStateAction } from 'react'
-import { UserInfoType } from '../../Types/User'
+import { FetchUserParameter, UserInfoType } from '../../Types/User'
 
 export function SingUpDialog({
   inputError,
@@ -20,7 +20,7 @@ export function SingUpDialog({
   inputError: boolean
   setSingInputs: Dispatch<SetStateAction<UserInfoType>>
   handleSwitchForm: () => void
-  sendInfoUser: () => void
+  sendInfoUser: (param: FetchUserParameter) => void
 }) {
   return (
     <>
@@ -104,7 +104,7 @@ export function SingUpDialog({
               fullWidth
               color='blue'
               placeholder={undefined}
-              onClick={sendInfoUser}
+              onClick={() => sendInfoUser('s')}
             >
               Sing up
             </Button>

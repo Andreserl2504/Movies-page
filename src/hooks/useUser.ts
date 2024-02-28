@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../Context/User'
-import { UserContextType, UserInfoType } from '../Types/User'
+import { FetchUserParameter, UserContextType, UserInfoType } from '../Types/User'
 
 export function useUser() {
   const {
@@ -23,14 +23,14 @@ export function useUser() {
     token: false
   })
 
-  const sendInfoUser = () => {
+  const sendInfoUser = (param: FetchUserParameter) => {
     if (
       logInputs.email?.includes('.com') &&
       logInputs.email?.includes('@')
     ) {
       logInputs.email.toLowerCase()
       setInputError(false)
-      userToBackend(logInputs)
+      userToBackend(logInputs, param)
     } else {
       setInputError(true)
     }

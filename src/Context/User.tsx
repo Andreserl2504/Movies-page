@@ -1,5 +1,9 @@
 import { ReactNode, createContext, useEffect, useRef, useState } from 'react'
-import { UserContextType, UserInfoType } from '../Types/User'
+import {
+  FetchUserParameter,
+  UserContextType,
+  UserInfoType
+} from '../Types/User'
 import { userFetch } from '../services/userFetch'
 import { useQuery } from '@tanstack/react-query'
 
@@ -15,11 +19,17 @@ export function UserProvider({ children }: { children: ReactNode }) {
     imgProfile: null
   })
   const infoToServer = useRef<UserInfoType>()
+  const parameters = useRef<FetchUserParameter>('')
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['userID'],
-    queryFn: async () => userFetch(infoToServer.current)
+    queryFn: async () =>
+      userFetch('/server/user/', infoToServer.current, parameters.current)
   })
-  const userToBackend = (userInfoInput: UserInfoType) => {
+  const userToBackend = (
+    userInfoInput: UserInfoType,
+    param: FetchUserParameter
+  ) => {
+    parameters.current = param
     infoToServer.current = userInfoInput
     infoToServer.current = {
       ...infoToServer.current,
@@ -29,6 +39,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
+    parameters.current = ''
     console.log(data)
   }, [data])
 

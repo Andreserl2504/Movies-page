@@ -8,7 +8,7 @@ import {
   Checkbox
 } from '@material-tailwind/react'
 import { Dispatch, SetStateAction } from 'react'
-import { UserInfoType } from '../../Types/User'
+import { FetchUserParameter, UserInfoType } from '../../Types/User'
 
 export function LogInDialog({
   inputError,
@@ -20,7 +20,7 @@ export function LogInDialog({
   inputError: boolean
   setLogInputs: Dispatch<SetStateAction<UserInfoType>>
   handleSwitchForm: () => void
-  sendInfoUser: () => void
+  sendInfoUser: (param: FetchUserParameter) => void
 }) {
   return (
     <>
@@ -83,26 +83,15 @@ export function LogInDialog({
           </div>
         </CardBody>
         <CardFooter className='pt-0' placeholder={undefined}>
-          <div className='flex gap-5 flex-wrap'>
-            <Button
-              variant='gradient'
-              fullWidth
-              color='blue'
-              placeholder={undefined}
-              onClick={sendInfoUser}
-            >
-              Log In
-            </Button>
-            <Button
-              variant='gradient'
-              fullWidth
-              color='blue'
-              placeholder={undefined}
-              onClick={() => console.log('To Do')}
-            >
-              Log In as Guest
-            </Button>
-          </div>
+          <Button
+            variant='gradient'
+            fullWidth
+            color='blue'
+            placeholder={undefined}
+            onClick={() => sendInfoUser('l')}
+          >
+            Log In
+          </Button>
           <Typography
             variant='small'
             className='mt-4 flex justify-center'

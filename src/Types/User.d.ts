@@ -8,7 +8,7 @@ export type UserContextType = {
   setSwitchUserMirror: Dispatch<SetStateAction<boolean>>
   isLoading: boolean
   isError: boolean
-  userToBackend: (userInfoInput: UserInfoType) => void
+  userToBackend: (userInfoInput: UserInfoType, param: FetchUserParameter) => void
 }
 
 export type UserInfoType = {
@@ -20,3 +20,5 @@ export type UserInfoType = {
   imgProfile?: string | null
   token?: boolean
 }
+
+export type FetchUserParameter = 'l' | 's' | ''
