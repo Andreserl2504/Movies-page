@@ -40,7 +40,16 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     parameters.current = ''
-    console.log(data)
+    if (data?.queryResult) {
+      setLogUserMirror(false)
+      setUserInfo({
+        userID: data.queryResult.userID,
+        username: data.queryResult.username,
+        nickname: data.queryResult.nickname,
+        imgProfile: data.queryResult.profile_img,
+      })
+      console.log(data?.queryResult)
+    }
   }, [data])
 
   return (

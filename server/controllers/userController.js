@@ -7,13 +7,11 @@ export class UserController {
       const result = validInfoForm(req.body.userData)
       if (result.success) {
         if (req.body.params === 's') {
-          const { queryResult } = UserModel.createUser({ data: result.data })
-
+          const { queryResult } = await UserModel.createUser({ data: result.data })
           res.json({ queryResult })
         } else if (req.body.params === 'l') {
           console.log('hi im login')
         }
-        res.json(req.body)
       } else {
         res.json({ MessageError: 'Validation error' })
       }
