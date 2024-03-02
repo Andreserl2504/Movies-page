@@ -18,10 +18,15 @@ export async function userFetch(
         if (response.ok) {
           return response.json()
         } else {
-          throw new Error('User fail')
+          return (async () => {
+            throw await response.text()
+          })();
         }
       })
       .then((json) => json)
+      .catch((e) => {
+        return new Error(e)
+      })
   } else {
     return {
       userID: null,

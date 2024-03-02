@@ -20,8 +20,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
   })
   const infoToServer = useRef<UserInfoType>()
   const parameters = useRef<FetchUserParameter>('')
-  const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ['userID'],
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ['id'],
     queryFn: async () =>
       userFetch('/server/user/', infoToServer.current, parameters.current)
   })
@@ -40,15 +40,16 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     parameters.current = ''
-    if (data?.queryResult) {
+    if (data?.id) {
       setLogUserMirror(false)
       setUserInfo({
-        userID: data.queryResult.userID,
-        username: data.queryResult.username,
-        nickname: data.queryResult.nickname,
-        imgProfile: data.queryResult.profile_img,
+        userID: data.id,
+        username: data.username,
+        nickname: data.nickname,
+        imgProfile: data.profile_img
       })
-      console.log(data?.queryResult)
+    } else if (data?.message) {
+      console.log(data.message)
     }
   }, [data])
 
@@ -57,7 +58,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
       value={{
         userInfo,
         isLoading,
-        isError,
         logUserMirror,
         switchUserMirror,
         setLogUserMirror,

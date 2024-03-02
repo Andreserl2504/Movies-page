@@ -98,26 +98,16 @@ export function SingUpDialog({
           </div>
         </CardBody>
         <CardFooter className='pt-0' placeholder={undefined}>
-          <div className=' flex gap-5 flex-wrap'>
-            <Button
-              variant='gradient'
-              fullWidth
-              color='blue'
-              placeholder={undefined}
-              onClick={() => sendInfoUser('s')}
-            >
-              Sing up
-            </Button>
-            <Button
-              variant='gradient'
-              fullWidth
-              color='blue'
-              placeholder={undefined}
-              onClick={() => console.log('To Do')}
-            >
-              Sing up as Guest
-            </Button>
-          </div>
+          <Button
+            variant='gradient'
+            fullWidth
+            color='blue'
+            placeholder={undefined}
+            onClick={() => sendInfoUser('s')}
+          >
+            Sing up
+          </Button>
+
           <Typography
             variant='small'
             className='mt-4 flex justify-center'
