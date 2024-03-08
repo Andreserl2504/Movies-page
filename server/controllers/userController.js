@@ -1,3 +1,4 @@
+import { createToken, verifyToken } from '../functions/jwt.js'
 import { UserModel } from '../models/userModel.js'
 import { validInfoForm } from '../schemas/UserLogSingSchema.js'
 
@@ -7,19 +8,28 @@ export class UserController {
       const result = validInfoForm(req.body.userData)
       if (result.success) {
         if (req.body.params === 's') {
-          const { queryResult, isDBError } = await UserModel.createUser({ data: result.data })
+          const { queryResult, isDBError } = await UserModel.createUser({
+            data: result.data
+          })
           if (!isDBError) {
-            res.status(201).json(queryResult)
-          }
-          else {
+            const token = result.data.token
+              ? await createToken(result.data.userID)
+              : null
+            res.status(201).json({ queryResult, token })
+          } else {
             throw new Error(isDBError)
           }
         } else if (req.body.params === 'l') {
-          const { queryResult, isDBError } = await UserModel.getUser({ data: result.data, password: result.data.password})
+          const { queryResult, isDBError } = await UserModel.getUser({
+            data: result.data,
+            password: result.data.password
+          })
           if (!isDBError) {
-            res.status(200).json(queryResult)
-          }
-          else {
+            const token = result.data.token
+              ? await createToken(queryResult.id)
+              : null
+            res.status(200).json({ queryResult, token })
+          } else {
             throw new Error(isDBError)
           }
         }
@@ -28,6 +38,20 @@ export class UserController {
       }
     } catch (e) {
       res.status(400).send(e.message)
+    }
+  }
+  static async autoLogin(req, res, next) {
+    if (req.body.userData.userIDToken) {
+      try {
+        const token = req.body.userData.userIDToken
+        const { userID } = await verifyToken(token)
+        const { queryResult } = await UserModel.getUser({ userID: userID })
+        res.status(200).json({ queryResult })
+      } catch (e) {
+        res.status(400).send(e.message)
+      }
+    } else {
+      next()
     }
   }
 }

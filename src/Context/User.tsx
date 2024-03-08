@@ -6,6 +6,7 @@ import {
 } from '../Types/User'
 import { userFetch } from '../services/userFetch'
 import { useQuery } from '@tanstack/react-query'
+import Cookies from 'universal-cookie'
 
 export const UserContext = createContext<UserContextType | null>(null)
 
@@ -20,11 +21,18 @@ export function UserProvider({ children }: { children: ReactNode }) {
   })
   const infoToServer = useRef<UserInfoType>()
   const parameters = useRef<FetchUserParameter>('')
+  const cookieID = useRef(new Cookies(null, {}))
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['id'],
     queryFn: async () =>
-      userFetch('/server/user/', infoToServer.current, parameters.current)
+      userFetch({
+        serverURL: '/server/user/',
+        data: infoToServer.current,
+        param: parameters.current,
+        token: cookieID.current.get('userIDToken')
+      })
   })
+  console.log(cookieID.current.get('userIDToken'))
   const userToBackend = (
     userInfoInput: UserInfoType,
     param: FetchUserParameter
@@ -37,17 +45,20 @@ export function UserProvider({ children }: { children: ReactNode }) {
     }
     refetch()
   }
-
   useEffect(() => {
     parameters.current = ''
-    if (data?.id) {
+    console.log(data)
+    if (data?.queryResult) {
       setLogUserMirror(false)
       setUserInfo({
-        userID: data.id,
-        username: data.username,
-        nickname: data.nickname,
-        imgProfile: data.profile_img
+        userID: data.queryResult.id,
+        username: data.queryResult.username,
+        nickname: data.queryResult.nickname,
+        imgProfile: data.queryResult.profile_img
       })
+      if (data?.token) {
+        cookieID.current.set('userIDToken', data.token)
+      }
     } else if (data?.message) {
       console.log(data.message)
     }

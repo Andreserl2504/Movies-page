@@ -1,4 +1,5 @@
 import mysql from 'mysql2/promise'
+import bcrypt from 'bcryptjs'
 
 const config = {
   host: 'localhost',
@@ -12,6 +13,7 @@ const connection = await mysql.createConnection(config)
 
 export class UserModel {
   static async createUser({ data }) {
+    const passwordHash = await bcrypt.hash(data.password, 10)
     try {
       const [validation] = await connection.query(
         `
@@ -27,7 +29,7 @@ export class UserModel {
         INSERT INTO users (id, username, email, password)
         VALUES (UNHEX(REPLACE(?, '-', '')), ?, ?, ?);
         `,
-          [data.userID, data.username, data.email, data.password]
+          [data.userID, data.username, data.email, passwordHash]
         )
         const [queryResult] = await this.getUser({ data: data })
         return { queryResult }
@@ -49,21 +51,34 @@ export class UserModel {
     }
   }
 
-  static async getUser({ data, password }) {
+  static async getUser({ data, password, userID }) {
     try {
-      if (password && data) {
+      if (userID) {
+        const [query] = await connection.query(
+          `
+        SELECT BIN_TO_UUID(id) id, username, nickname, profile_img FROM users WHERE BIN_TO_UUID(id) = ?
+        `,
+          [userID]
+        )
+        const [queryResult] = query
+        return { queryResult }
+      } else if (password && data) {
         const [validation] = await connection.query(
           `
           SELECT username, email, password FROM users WHERE email = ? 
           `,
           [data.email]
-          )
-        if (validation[0]?.password === data.password) {
+        )
+        const comparePassword =
+          !validation.length < 1
+            ? await bcrypt.compare(password, validation[0]?.password)
+            : null
+        if (comparePassword === true) {
           const [queryResult] = await this.getUser({ data: validation[0] })
           return { queryResult }
-        } else if (validation[0]?.password !== data.password)
+        } else if (validation.length < 1) throw new Error('This User No Exist')
+        else if (comparePassword === false)
           throw new Error('Incorrect Password')
-        else if (validation[0].length < 1) throw new Error('This User No Exist')
         else throw new Error('Something is broken')
       } else {
         const [queryResult] = await connection.query(

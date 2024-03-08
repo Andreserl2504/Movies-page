@@ -1,12 +1,20 @@
 import { FetchUserParameter, UserInfoType } from '../Types/User'
 
-export async function userFetch(
-  serverURL: string,
-  data: UserInfoType | undefined,
+export async function userFetch({
+  serverURL,
+  data,
+  param,
+  token
+}: {
+  serverURL: string
+  data: UserInfoType | undefined
   param: FetchUserParameter
-) {
-  if (data?.userID) {
-    const toServer = { userData: data, params: param }
+  token: string | undefined
+}) {
+  if (data?.userID || token) {
+    const toServer = token
+      ? { userData: { userIDToken: token } }
+      : { userData: data, params: param }
     return fetch(serverURL, {
       method: 'POST',
       headers: {
@@ -20,7 +28,7 @@ export async function userFetch(
         } else {
           return (async () => {
             throw await response.text()
-          })();
+          })()
         }
       })
       .then((json) => json)

@@ -12,6 +12,7 @@ export type UserContextType = {
 
 export type UserInfoType = {
   userID?: UUIDType | null
+  userIDToken?: string | null
   username?: string | null
   nickname?: string | null
   email?: string | null

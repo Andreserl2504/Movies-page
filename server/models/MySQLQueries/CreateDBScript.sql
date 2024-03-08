@@ -10,7 +10,6 @@ CREATE TABLE `users` (
   `password` text,
   `profile_img` text,
   `description` varchar(250),
-  `user_token` text,
   `created_at` timestamp DEFAULT (now())
 );
 
