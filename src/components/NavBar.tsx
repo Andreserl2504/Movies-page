@@ -1,13 +1,13 @@
 import { Navbar } from '@material-tailwind/react'
 import { Logo } from './icons/Logo'
 import { HomeIcon, ProfileIcon } from './icons/TwitterIcons'
-import { AvatarProfile } from './Avatar'
+import { AvatarProfile } from './AvatarComponents/AvatarProfile'
 import { NavLink } from 'react-router-dom'
 
 export function NavBar() {
   return (
     <Navbar
-      className=' relative h-screen p-5 rounded-none w-24 shadow-none'
+      className=' h-screen p-5 rounded-none w-24 shadow-none sticky top-0'
       blurred={false}
       placeholder={undefined}
     >

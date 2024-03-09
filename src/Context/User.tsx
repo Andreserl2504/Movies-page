@@ -32,7 +32,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
         token: cookieID.current.get('userIDToken')
       })
   })
-  console.log(cookieID.current.get('userIDToken'))
   const userToBackend = (
     userInfoInput: UserInfoType,
     param: FetchUserParameter
@@ -47,7 +46,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }
   useEffect(() => {
     parameters.current = ''
-    console.log(data)
     if (data?.queryResult) {
       setLogUserMirror(false)
       setUserInfo({

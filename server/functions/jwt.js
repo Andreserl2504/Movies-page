@@ -6,7 +6,7 @@ export const createToken = async (value) => {
     jwt.sign(
       { userID: value },
       SECRET_KEY,
-      { expiresIn: '1d' },
+      { expiresIn: '3d' },
       (err, token) => {
         if (err) rej(new Error('Token Error'))
         res(token)

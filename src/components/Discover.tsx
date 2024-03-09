@@ -3,6 +3,7 @@ import { MoviesCarrousel } from './DiscoverComponents/MoviesCarrousel'
 import { CarruselInfo } from '../Types/Discover'
 import { SearchPreview } from './DiscoverComponents/SearchPreview'
 import { useSearchMovie } from '../hooks/useSearchMovie'
+import { UserMenu } from './DiscoverComponents/UserMenu'
 
 export function Discover() {
   const { data, isLoading, isError, handleChange } = useSearchMovie()
@@ -51,8 +52,23 @@ export function Discover() {
   return (
     <div className='flex flex-col gap-5 w-full p-5'>
       <div className='flex gap-5 flex-col relative'>
-        <Input onChange={(e) => handleChange(e.target.value)} crossOrigin={undefined} label='Search' />
-        {data !== undefined ? (<SearchPreview info={data?.Search} isError={isError} isLoading={isLoading}/>) : ('')}
+        <Input
+          onChange={(e) => handleChange(e.target.value)}
+          crossOrigin={undefined}
+          label='Search'
+        />
+        {data !== undefined ? (
+          <SearchPreview
+            info={data?.Search}
+            isError={isError}
+            isLoading={isLoading}
+          />
+        ) : (
+          ''
+        )}
+      </div>
+      <div>
+        <UserMenu />
       </div>
       <div className='w-full'>
         {carrouselInfo.map((info, i) => (

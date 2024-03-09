@@ -94,4 +94,14 @@ export class UserModel {
       return { isDBError }
     }
   }
+  static async getUserForMenu() {
+    try {
+      const [queryResult] = await connection.query(`
+      SELECT username, nickname, profile_img FROM users ORDER BY RAND() LIMIT 5
+      `)
+      return { queryResult }
+    } catch (e) {
+      return new Error(e.message)
+    }
+  }
 }

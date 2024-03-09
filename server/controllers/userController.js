@@ -41,17 +41,26 @@ export class UserController {
     }
   }
   static async autoLogin(req, res, next) {
-    if (req.body.userData.userIDToken) {
+    if (req.body?.userData?.userIDToken) {
       try {
         const token = req.body.userData.userIDToken
         const { userID } = await verifyToken(token)
         const { queryResult } = await UserModel.getUser({ userID: userID })
         res.status(200).json({ queryResult })
       } catch (e) {
-        res.status(400).send(e.message)
+        res.status(500).send(e.message)
       }
     } else {
       next()
+    }
+  }
+  static async getUsers(req,res) {
+    try {
+      const { queryResult } = await UserModel.getUserForMenu()
+      res.json({ queryResult })
+
+    } catch(e) {
+      res.status(500).send(e.message)
     }
   }
 }

@@ -22,9 +22,20 @@ export type SearchResultType = {
   poster: string
 }
 
+// discoverContext
+
+type MenuUserType = {
+  username: string
+  nickname: string
+  profile_img: string
+}
+
+type UserQueryType = {
+  userInfo: MenuUserType[] | undefined
+  isLoading: boolean | undefined
+  isError: boolean | undefined
+}
+
 export type DiscoverContextType = {
-  data: TQueryFndata
-  isLoading: boolean
-  isError: boolean
-  handleChange: (inputValue:string) => void
+  menuUser: UserQueryType
 }
