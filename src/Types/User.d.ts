@@ -10,15 +10,22 @@ export type UserContextType = {
   userToBackend: (userInfoInput: UserInfoType, param: FetchUserParameter) => void
 }
 
+
+export type UserType = {
+  userID: UUIDType | null
+  username: string | null
+  nickname: string | null
+  imgProfile: string | null
+}
+
 export type UserInfoType = {
   userID?: UUIDType | null
-  userIDToken?: string | null
   username?: string | null
   nickname?: string | null
   email?: string | null
   password?: string | null
-  imgProfile?: string | null
   token?: boolean
+  imgProfile?: string | null
 }
 
 export type FetchUserParameter = 'l' | 's' | ''

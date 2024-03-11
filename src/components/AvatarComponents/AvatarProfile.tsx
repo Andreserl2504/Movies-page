@@ -3,14 +3,17 @@ import { useUser } from '../../hooks/useUser'
 
 export function AvatarProfile({
   className,
-  scrProfile
+  scrProfile,
+  size,
 }: {
   className?: string
   scrProfile?: string
+  size?: string
 }) {
   const { userInfo } = useUser()
   return (
     <Avatar
+    size={size ? size : 'md'}
       src={
         scrProfile
           ? scrProfile

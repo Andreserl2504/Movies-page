@@ -10,4 +10,4 @@ userRouter.use('/', (req, res, next) =>
 userRouter.post('/', (req, res) =>
   UserController.logSingUserController(req, res)
 )
-userRouter.get('/', (req, res) => UserController.getUsers(req, res))
+userRouter.get('/:user', (req, res) => UserController.getUsers(req, res))

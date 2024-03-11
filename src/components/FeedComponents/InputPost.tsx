@@ -1,6 +1,7 @@
 import { AvatarProfile } from '../AvatarComponents/AvatarProfile'
 import { Input, Progress, Button } from '@material-tailwind/react'
 import { useState } from 'react'
+import { MenuWithSearchInput } from './MiniMenuMovies'
 
 export function InputPost() {
   const [percentage, setPercentage] = useState(0)
@@ -25,6 +26,9 @@ export function InputPost() {
               <Progress value={percentage / 2.8} size='sm' color='blue' placeholder={undefined}/>
             </div>
             <span>{`${percentage}/280`}</span>
+          </div>
+          <div>
+            <MenuWithSearchInput/>
           </div>
           <Button className=' hover:shadow-md shadow-sm py-2 px-4' disabled={percentage == 0 || percentage > 280 ? true : false} color='blue' placeholder={undefined}>
             Post

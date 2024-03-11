@@ -9,10 +9,11 @@ import {
 } from '@material-tailwind/react'
 import { useUserProfile } from '../../hooks/useUserProfile'
 import { AvatarUsers } from '../AvatarComponents/AvatarUsers'
+import { useUser } from '../../hooks/useUser'
 
 export function UserMenu() {
   const { menuUser } = useUserProfile()
-  console.log(menuUser)
+  const { userInfo } = useUser()
   return (
     <Card className='w-96' placeholder={undefined}>
       <List placeholder={undefined}>
@@ -45,7 +46,7 @@ export function UserMenu() {
                   </Typography>
                 </div>
                 <div className='flex items-center'>
-                  <Button className='' color='blue' placeholder={undefined}>
+                  <Button className='' color='blue' placeholder={undefined} disabled={userInfo.username === info.username ? true : false}>
                     Follow
                   </Button>
                 </div>

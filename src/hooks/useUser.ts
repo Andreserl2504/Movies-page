@@ -6,7 +6,6 @@ export function useUser() {
   const {
     userInfo,
     isLoading,
-    isError,
     logUserMirror,
     switchUserMirror,
     setLogUserMirror,
@@ -50,7 +49,6 @@ export function useUser() {
   return {
     userInfo,
     isLoading,
-    isError,
     inputError,
     logUserMirror,
     switchUserMirror,

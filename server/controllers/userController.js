@@ -56,6 +56,8 @@ export class UserController {
   }
   static async getUsers(req,res) {
     try {
+      const user = req.params.user
+      console.log(user)
       const { queryResult } = await UserModel.getUserForMenu()
       res.json({ queryResult })
 
