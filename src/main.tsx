@@ -4,7 +4,6 @@ import { ThemeProvider } from '@material-tailwind/react'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import './index.css'
 import { UserProvider } from './Context/User.tsx'
-import { DiscoverProvider } from './Context/Discover.tsx'
 
 const queryClient = new QueryClient()
 
@@ -13,9 +12,7 @@ root.render(
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
       <UserProvider>
-        <DiscoverProvider>
-          <App />
-        </DiscoverProvider>
+        <App />
       </UserProvider>
     </ThemeProvider>
   </QueryClientProvider>

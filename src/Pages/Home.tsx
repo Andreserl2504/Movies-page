@@ -1,11 +1,5 @@
-import { Feed } from "../components/Feed";
-import { Discover } from "../components/Discover";
+import { Feed } from '../components/Feed'
 
 export function Home() {
-  return (
-    <main className=" flex gap-10 w-full">
-      <Feed/>
-      <Discover/>
-    </main>
-  )
+  return <Feed />
 }

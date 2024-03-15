@@ -11,7 +11,7 @@ export function InputPost() {
   return (
     <div className='flex flex-row h-40 border-b-2 [&_div]:h-full p-5 gap-3'>
       <div className=' w-16 flex justify-center pt-3'>
-        <AvatarProfile />
+        <AvatarProfile link={true} />
       </div>
       <div className=' flex flex-col gap-3 w-full'>
         <Input

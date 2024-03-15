@@ -1,9 +1,10 @@
-import { genres, imdbID, type } from "./GeneralTypes"
+import { genres, imdbID, type } from './GeneralTypes'
+import { UUIDType } from './User'
 
 //Carrousel
 
 export type CarruselInfo = {
-  info:carruselElementInfo[]
+  info: carruselElementInfo[]
   genres: genres
 }
 
@@ -36,6 +37,16 @@ type UserQueryType = {
   isError: boolean | undefined
 }
 
-export type DiscoverContextType = {
-  menuUser: UserQueryType
+type ProfileInfoType = {
+  id: UUIDType | null
+  username: string | null
+  nickname: string | null
+  profileImg: string | null
+  description: string | null
+}
+
+export type userProfileType = {
+  profileInfo: ProfileInfoType | null
+  followers: number | null
+  following: number | null
 }

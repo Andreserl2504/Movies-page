@@ -54,14 +54,25 @@ export class UserController {
       next()
     }
   }
-  static async getUsers(req,res) {
+  static async getUsers(req, res) {
     try {
       const user = req.params.user
-      console.log(user)
-      const { queryResult } = await UserModel.getUserForMenu()
+      const { queryResult } = await UserModel.getUserForMenu({ userLog: user })
       res.json({ queryResult })
-
-    } catch(e) {
+    } catch (e) {
+      res.status(500).send(e.message)
+    }
+  }
+  static async getUserProfile(req, res) {
+    try {
+      const user = req.params.user
+      if (user) {
+        const { queryResult } = await UserModel.getUserProfile({
+          username: user
+        })
+        res.status(200).json(queryResult)
+      }
+    } catch (e) {
       res.status(500).send(e.message)
     }
   }

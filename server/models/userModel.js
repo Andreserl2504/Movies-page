@@ -94,11 +94,36 @@ export class UserModel {
       return { isDBError }
     }
   }
-  static async getUserForMenu() {
+  static async getUserForMenu({ userLog }) {
     try {
-      const [queryResult] = await connection.query(`
-      SELECT username, nickname, profile_img FROM users ORDER BY RAND() LIMIT 5
-      `)
+      const [queryResult] = await connection.query(
+        `
+      SELECT username, nickname, profile_img FROM users WHERE username <> ? ORDER BY RAND() LIMIT 5
+      `,
+        [userLog]
+      )
+      return { queryResult }
+    } catch (e) {
+      return new Error(e.message)
+    }
+  }
+
+  static async getUserProfile({ username }) {
+    try {
+      const [userInfo] = await connection.query(`
+      SELECT BIN_TO_UUID(id) id, username, nickname, profile_img, description FROM users WHERE username = ?
+      `, [username])
+      const [following] = await connection.query (`
+      SELECT count(following_id) FROM followers WHERE follower_id = ?     
+      `, [userInfo[0].id])
+      const [followers] = await connection.query (`
+      SELECT count(follower_id) FROM followers WHERE following_id = ?     
+      `, [userInfo[0].id])
+      const queryResult = {
+        profileInfo: userInfo[0],
+        following: following[0]['count(following_id)'],
+        followers: followers[0]['count(follower_id)']
+      }
       return { queryResult }
     } catch (e) {
       return new Error(e.message)

@@ -1,9 +1,7 @@
 export const profilesFetching = async ({
-  URLServer,
-  username
+  URLServer
 }: {
   URLServer: string
-  username?: string
 }) => {
   return fetch(URLServer)
     .then((response) => {
