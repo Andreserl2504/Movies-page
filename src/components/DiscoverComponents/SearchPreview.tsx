@@ -1,4 +1,4 @@
-import { Search } from '../../Types/querySearchParameter'
+import { MoviesFetchType } from '../../Types/Discover'
 import { IsError } from './InputPreviewComponents/IsError'
 import { Preview } from './InputPreviewComponents/Preview'
 
@@ -7,7 +7,7 @@ export function SearchPreview({
   isLoading,
   isError
 }: {
-  info: Search[]
+  info: MoviesFetchType[]
   isLoading: boolean
   isError: boolean
 }) {

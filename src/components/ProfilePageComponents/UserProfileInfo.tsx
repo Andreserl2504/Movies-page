@@ -13,7 +13,6 @@ export function UserProfileInfo({
   param: string
 }) {
   const { userProfile, isLoading, isError } = useUserProfile()
-  console.log(userProfile)
   return (
     <>
       {userProfile?.profileInfo?.id && !isLoading && !isError ? (
@@ -31,14 +30,16 @@ export function UserProfileInfo({
             </strong>
           </section>
 
-          <main className=' flex flex-col justify-center relative w-full min-h-72 gap-5'>
+          <main className=' flex flex-col justify-center relative w-full min-h-72 gap-5 border-b-2'>
             <div className='absolute top-0 w-full h-28  bg-blue-500'></div>
             <div className=' ml-12 '>
               <AvatarUsers
                 link={false}
                 className=' border-2  border-white'
                 size='xxl'
-                srcProfile={userProfile.profileInfo.profileImg} username={''}              />
+                srcProfile={userProfile.profileInfo.profileImg}
+                username={''}
+              />
             </div>
             <div className='flex flex-row justify-between ml-10 mr-10'>
               <div className='flex flex-col '>
@@ -72,7 +73,12 @@ export function UserProfileInfo({
           </main>
         </>
       ) : (
-        <>{isLoading && !isError ? <Spinner /> : <Spinner />}</>
+        <>
+          {isLoading && !isError && !userProfile?.profileInfo?.id && (
+            <Spinner />
+          )}
+          {isError && <h1>Error</h1>}
+        </>
       )}
     </>
   )

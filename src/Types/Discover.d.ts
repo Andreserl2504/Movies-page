@@ -50,3 +50,14 @@ export type userProfileType = {
   followers: number | null
   following: number | null
 }
+
+export type MoviesFetchType = {
+  imdbID: imdbID
+  title: string
+  year: string
+  poster: string
+  type: type
+  duration?: string
+  genre?: string[]
+  imdbRating?: string
+}

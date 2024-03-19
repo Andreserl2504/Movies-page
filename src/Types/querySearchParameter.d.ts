@@ -1,4 +1,4 @@
-import { imdbID } from "./GeneralTypes";
+import { imdbID, type } from "./GeneralTypes";
 
 export type MoviesFetch = {
     Search:       Search[];
@@ -10,13 +10,8 @@ export type Search = {
     Title:  string;
     Year:   string;
     imdbID: imdbID;
-    Type:   Type;
+    Type:   type;
     Poster: string;
-}
-
-export enum Type {
-    Movie = "movie",
-    Series = "series",
 }
 
 // Converts JSON strings to/from your types

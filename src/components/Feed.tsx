@@ -1,5 +1,5 @@
 import { InputPost } from './FeedComponents/InputPost'
-import { NoInputPost } from '../components/FeedComponents/NoInputPost'
+import { NoInputPost } from './FeedComponents/NoInputPost'
 import { useUser } from '../hooks/useUser'
 
 export function Feed() {

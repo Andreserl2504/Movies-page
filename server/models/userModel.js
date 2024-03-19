@@ -114,10 +114,10 @@ export class UserModel {
       SELECT BIN_TO_UUID(id) id, username, nickname, profile_img, description FROM users WHERE username = ?
       `, [username])
       const [following] = await connection.query (`
-      SELECT count(following_id) FROM followers WHERE follower_id = ?     
+      SELECT count(following_id) FROM followers WHERE BIN_TO_UUID(follower_id) = ?     
       `, [userInfo[0].id])
       const [followers] = await connection.query (`
-      SELECT count(follower_id) FROM followers WHERE following_id = ?     
+      SELECT count(follower_id) FROM followers WHERE BIN_TO_UUID(following_id) = ?     
       `, [userInfo[0].id])
       const queryResult = {
         profileInfo: userInfo[0],

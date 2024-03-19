@@ -6,7 +6,7 @@ import { useSearchMovie } from '../hooks/useSearchMovie'
 import { UserMenu } from './DiscoverComponents/UserMenu'
 
 export function Discover() {
-  const { data, isLoading, isError, handleChange } = useSearchMovie()
+  const { movies, isLoading, isError, handleChange } = useSearchMovie()
   const carrouselInfo: CarruselInfo[] = [
     {
       info: [
@@ -57,9 +57,9 @@ export function Discover() {
           crossOrigin={undefined}
           label='Search'
         />
-        {data !== undefined ? (
+        {movies ? (
           <SearchPreview
-            info={data?.Search}
+            info={movies}
             isError={isError}
             isLoading={isLoading}
           />
