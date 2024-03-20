@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useUser } from './useUser'
 import { useQuery } from '@tanstack/react-query'
-import { profilesFetching } from '../services/discoverFetch'
+import { getFromServer } from '../services/getFromServer'
 import { UserQueryType } from '../Types/Discover'
 
 export function useUserMenu() {
@@ -14,7 +14,7 @@ export function useUserMenu() {
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['queryResult'],
     queryFn: async () =>
-      await profilesFetching({
+      await getFromServer({
         URLServer: `/server/user/menuUser/${userInfo.username}`
       })
   })

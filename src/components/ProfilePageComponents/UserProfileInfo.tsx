@@ -12,7 +12,8 @@ export function UserProfileInfo({
   userInfo: UserType
   param: string
 }) {
-  const { userProfile, isLoading, isError } = useUserProfile()
+  const { userProfile, isLoading, isError, isFollowing } = useUserProfile()
+
   return (
     <>
       {userProfile?.profileInfo?.id && !isLoading && !isError ? (
@@ -54,9 +55,15 @@ export function UserProfileInfo({
                 {userInfo.username === param ? (
                   <Button placeholder={undefined}>Edit Profile</Button>
                 ) : (
-                  <Button color='blue' placeholder={undefined}>
-                    Follow
-                  </Button>
+                  <>
+                    {isFollowing ? (
+                      <Button placeholder={undefined}>Unfollow</Button>
+                    ) : (
+                      <Button color='blue' placeholder={undefined}>
+                        Follow
+                      </Button>
+                    )}
+                  </>
                 )}
               </div>
             </div>

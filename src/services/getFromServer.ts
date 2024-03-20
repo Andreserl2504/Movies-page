@@ -1,4 +1,4 @@
-export const profilesFetching = async ({
+export const getFromServer = async ({
   URLServer
 }: {
   URLServer: string

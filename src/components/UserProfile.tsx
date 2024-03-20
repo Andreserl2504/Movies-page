@@ -10,13 +10,15 @@ export function UserProfile() {
   return (
     <div className='min-w-[600px] border-x-2'>
       {userInfo.userID && username ? (
-        <UserProfileInfo param={username} userInfo={userInfo} />
+        <>
+          <UserProfileInfo param={username} userInfo={userInfo} />
+          <section>
+            <ProfileListFav />
+          </section>
+        </>
       ) : (
         <NoUserProfileInfo />
       )}
-      <section>
-        <ProfileListFav />
-      </section>
     </div>
   )
 }

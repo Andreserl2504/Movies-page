@@ -110,21 +110,50 @@ export class UserModel {
 
   static async getUserProfile({ username }) {
     try {
-      const [userInfo] = await connection.query(`
+      const [userInfo] = await connection.query(
+        `
       SELECT BIN_TO_UUID(id) id, username, nickname, profile_img, description FROM users WHERE username = ?
-      `, [username])
-      const [following] = await connection.query (`
+      `,
+        [username]
+      )
+      const [following] = await connection.query(
+        `
       SELECT count(following_id) FROM followers WHERE BIN_TO_UUID(follower_id) = ?     
-      `, [userInfo[0].id])
-      const [followers] = await connection.query (`
+      `,
+        [userInfo[0].id]
+      )
+      const [followers] = await connection.query(
+        `
       SELECT count(follower_id) FROM followers WHERE BIN_TO_UUID(following_id) = ?     
-      `, [userInfo[0].id])
+      `,
+        [userInfo[0].id]
+      )
       const queryResult = {
         profileInfo: userInfo[0],
         following: following[0]['count(following_id)'],
         followers: followers[0]['count(follower_id)']
       }
       return { queryResult }
+    } catch (e) {
+      return new Error(e.message)
+    }
+  }
+  static async isFollowing({ username, follower }) {
+    try {
+      const [isFollowing] = await connection.query(
+        `SELECT BIN_TO_UUID(following_id) FROM followers
+        WHERE BIN_TO_UUID(following_id) = (SELECT BIN_TO_UUID(id) id FROM users 
+                                            WHERE username = ?)
+        AND
+        BIN_TO_UUID(follower_id) = (SELECT BIN_TO_UUID(id) id FROM users
+                                    WHERE username = ?)`,
+        [username, follower]
+      )
+      if (isFollowing.length > 0) {
+        return { isFollowing: true }
+      } else {
+        return { isFollowing: false }
+      }
     } catch (e) {
       return new Error(e.message)
     }

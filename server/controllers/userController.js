@@ -76,4 +76,21 @@ export class UserController {
       res.status(500).send(e.message)
     }
   }
+  static async isFollowing(req, res) {
+    try {
+      const username = req.params.username
+      const follower = req.params.follower
+      if (username && username !== follower) {
+        const { isFollowing } = await UserModel.isFollowing({
+          username: username,
+          follower: follower
+        })
+        res.json({ isFollowing: isFollowing })
+      } else {
+        res.json({ isFollowing: false })
+      }
+    } catch (e) {
+      res.status(500).send(e.message)
+    }
+  }
 }
