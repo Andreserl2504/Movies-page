@@ -1,8 +1,4 @@
-export const getFromServer = async ({
-  URLServer
-}: {
-  URLServer: string
-}) => {
+export const getFromServer = async ({ URLServer }: { URLServer: string }) => {
   return fetch(URLServer)
     .then((response) => {
       if (response.ok) {

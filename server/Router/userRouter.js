@@ -18,6 +18,6 @@ userRouter.get('/userProfile/:user', (req, res) =>
   UserController.getUserProfile(req, res)
 )
 
-userRouter.get('/isFollowing/:username/:follower/', (req, res) =>
+userRouter.get('/isFollowing/:username/:follower', (req, res) =>
   UserController.isFollowing(req, res)
 )

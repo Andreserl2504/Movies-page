@@ -1,15 +1,5 @@
-import mysql from 'mysql2/promise'
+import { connection } from './sqlConnection.js'
 import bcrypt from 'bcryptjs'
-
-const config = {
-  host: 'localhost',
-  user: 'root',
-  port: 3306,
-  password: '',
-  database: 'socialmoviesdb'
-}
-
-const connection = await mysql.createConnection(config)
 
 export class UserModel {
   static async createUser({ data }) {
@@ -143,16 +133,16 @@ export class UserModel {
       const [isFollowing] = await connection.query(
         `SELECT BIN_TO_UUID(following_id) FROM followers
         WHERE BIN_TO_UUID(following_id) = (SELECT BIN_TO_UUID(id) id FROM users 
-                                            WHERE username = ?)
+        WHERE username = ?)
         AND
         BIN_TO_UUID(follower_id) = (SELECT BIN_TO_UUID(id) id FROM users
-                                    WHERE username = ?)`,
+        WHERE username = ?)`,
         [username, follower]
       )
       if (isFollowing.length > 0) {
-        return { isFollowing: true }
+        return true
       } else {
-        return { isFollowing: false }
+        return false
       }
     } catch (e) {
       return new Error(e.message)

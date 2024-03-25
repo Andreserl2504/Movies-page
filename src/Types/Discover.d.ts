@@ -29,6 +29,7 @@ type MenuUserType = {
   username: string
   nickname: string
   profile_img: string
+  isFollowing: boolean
 }
 
 type UserQueryType = {
@@ -49,7 +50,7 @@ export type userProfileType = {
   profileInfo: ProfileInfoType | null
   followers: number | null
   following: number | null
-  isFollowing: boolean
+  isFollowing: boolean[]
 }
 
 export type MoviesFetchType = {

@@ -4,10 +4,17 @@ import {
   Button,
   MenuList,
   MenuItem,
-  Input
+  Input,
+  ListItemSuffix,
+  Chip
 } from '@material-tailwind/react'
+import { useSearchMovie } from '../../../hooks/useSearchMovie'
+import { useState } from 'react'
 
 export function MenuSelectMovie() {
+  const [search, setSearch] = useState('')
+  const { movies, isLoading, isError } = useSearchMovie(search)
+  console.log(movies)
   return (
     <Menu
       dismiss={{
@@ -15,7 +22,12 @@ export function MenuSelectMovie() {
       }}
     >
       <MenuHandler>
-        <Button placeholder={undefined} className=' h-8 w-16 flex justify-center items-center'>Search</Button>
+        <Button
+          placeholder={undefined}
+          className=' h-8 w-16 flex justify-center items-center'
+        >
+          Search
+        </Button>
       </MenuHandler>
       <MenuList placeholder={undefined}>
         <Input
@@ -23,11 +35,42 @@ export function MenuSelectMovie() {
           containerProps={{
             className: 'mb-4'
           }}
+          onChange={(e) => setSearch(e.target.value)}
           crossOrigin={undefined}
         />
-        <MenuItem placeholder={undefined}>Menu Item 1</MenuItem>
-        <MenuItem placeholder={undefined}>Menu Item 2</MenuItem>
-        <MenuItem placeholder={undefined}>Menu Item 3</MenuItem>
+        <>
+          {movies && !isLoading && !isError
+            ? movies.map((movie) => (
+                <MenuItem placeholder={undefined}>
+                  <div className='flex flex-nowrap justify-between gap-5'>
+                    <div className='flex flex-nowrap gap-5'>
+                      <span className=' w-10'>
+                        <img
+                          className=' rounded-md'
+                          src={movie.poster}
+                          alt=''
+                        />
+                      </span>
+                      <div className='flex flex-col gap-2'>
+                        <strong>{movie.title}</strong>
+                        <span>{movie.year}</span>
+                      </div>
+                    </div>
+                    <div>
+                      <ListItemSuffix placeholder={undefined}>
+                        <Chip
+                          value={movie.type}
+                          variant='ghost'
+                          size='sm'
+                          className='rounded-full'
+                        />
+                      </ListItemSuffix>
+                    </div>
+                  </div>
+                </MenuItem>
+              ))
+            : ''}
+        </>
       </MenuList>
     </Menu>
   )

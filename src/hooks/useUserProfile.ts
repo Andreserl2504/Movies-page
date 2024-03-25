@@ -8,7 +8,7 @@ import { useFollowButton } from './useFollowButton'
 
 export function useUserProfile() {
   const { username } = useParams()
-  const { isFollowing } = useFollowButton({ username: username})
+  const { isFollowing } = useFollowButton({ username: [username]})
   const [userProfile, setUserProfile] = useState<userProfileType>({
     profileInfo: {
       id: null,

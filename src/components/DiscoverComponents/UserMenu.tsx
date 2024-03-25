@@ -53,17 +53,34 @@ export function UserMenu() {
                     </Typography>
                   </div>
                   <div className='flex items-center'>
-                    <Button
-                      className=''
-                      color='blue'
-                      placeholder={undefined}
-                      onClick={() => console.log('hi')}
-                      disabled={
-                        userInfo.username === info.username ? true : false
-                      }
-                    >
-                      Follow
-                    </Button>
+                    {info.isFollowing ? (
+                      <>
+                        <Button
+                          className=' px-4'
+                          placeholder={undefined}
+                          onClick={() => console.log('hi')}
+                          disabled={
+                            userInfo.username === info.username ? true : false
+                          }
+                        >
+                          UnFollow
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          className=''
+                          color='blue'
+                          placeholder={undefined}
+                          onClick={() => console.log('hi')}
+                          disabled={
+                            userInfo.username === info.username ? true : false
+                          }
+                        >
+                          Follow
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </div>
               </ListItem>

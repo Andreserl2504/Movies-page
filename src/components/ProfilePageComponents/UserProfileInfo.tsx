@@ -56,10 +56,19 @@ export function UserProfileInfo({
                   <Button placeholder={undefined}>Edit Profile</Button>
                 ) : (
                   <>
-                    {isFollowing ? (
-                      <Button placeholder={undefined}>Unfollow</Button>
+                    {isFollowing[0] ? (
+                      <Button
+                        placeholder={undefined}
+                        onClick={() => console.log('unfollow to-do')}
+                      >
+                        Unfollow
+                      </Button>
                     ) : (
-                      <Button color='blue' placeholder={undefined}>
+                      <Button
+                        color='blue'
+                        placeholder={undefined}
+                        onClick={() => console.log('follow to-do')}
+                      >
                         Follow
                       </Button>
                     )}

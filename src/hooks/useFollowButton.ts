@@ -3,18 +3,21 @@ import { useEffect, useState } from 'react'
 import { getFromServer } from '../services/getFromServer'
 import { useUser } from './useUser'
 
-export function useFollowButton({ username }: { username: string | undefined}) {
+export function useFollowButton({ username }: { username: (string | undefined)[] }) {
   const { userInfo } = useUser()
-  const [isFollowing, setIsFollowing] = useState<boolean>(false)
-  const { data, refetch } = useQuery<{
-    isFollowing: boolean
-  }>({
+  const [isFollowing, setIsFollowing] = useState<boolean[]>([false])
+  const { data, refetch } = useQuery<
+    {
+      isFollowing: boolean[]
+    }
+  >({
     queryKey: ['isFollowing'],
     queryFn: async () =>
       getFromServer({
-        URLServer: `/server/user/isFollowing/${username}/${userInfo.username}`
+        URLServer: `/server/user/isFollowing/${username.toString()}/${userInfo.username}`
       })
   })
+
   useEffect(() => {
     if (username) {
       refetch()

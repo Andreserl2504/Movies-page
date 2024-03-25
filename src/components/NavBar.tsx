@@ -20,7 +20,7 @@ export function NavBar() {
     >
       <div className='h-full min-w-12 flex flex-col justify-between'>
         <div className='flex flex-wrap min-w-12 gap-7 p-3'>
-          <Logo className=' w-12' />
+          <Logo  />
           <NavLink
             to={'/'}
             className={({ isActive }) =>

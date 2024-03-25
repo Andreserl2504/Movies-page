@@ -4,9 +4,11 @@ import { CarruselInfo } from '../Types/Discover'
 import { SearchPreview } from './DiscoverComponents/SearchPreview'
 import { useSearchMovie } from '../hooks/useSearchMovie'
 import { UserMenu } from './DiscoverComponents/UserMenu'
+import { useState } from 'react'
 
 export function Discover() {
-  const { movies, isLoading, isError, handleChange } = useSearchMovie()
+  const [search, setSearch] = useState('')
+  const { movies, isLoading, isError } = useSearchMovie(search)
   const carrouselInfo: CarruselInfo[] = [
     {
       info: [
@@ -53,7 +55,7 @@ export function Discover() {
     <div className='flex flex-col gap-5 w-full p-5'>
       <div className='flex gap-5 flex-col relative'>
         <Input
-          onChange={(e) => handleChange(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
           crossOrigin={undefined}
           label='Search'
         />

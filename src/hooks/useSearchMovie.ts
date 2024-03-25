@@ -5,8 +5,7 @@ import { MoviesFetch } from '../Types/querySearchParameter'
 import debounce from 'just-debounce-it'
 import { MoviesFetchType } from '../Types/Discover'
 
-export function useSearchMovie() {
-  const [search, setSearch] = useState<string>('')
+export function useSearchMovie(search: string) {
   const [movies, setMovies] = useState<MoviesFetchType[] | null>(null)
   const { data, isLoading, isError, refetch } = useQuery<MoviesFetch>({
     queryKey: ['imdbID'],
@@ -14,9 +13,6 @@ export function useSearchMovie() {
   })
   const makeRefecth = debounce(async () => await refetch(), 200)
   const debounceSearchMovie = useCallback(makeRefecth, [makeRefecth])
-  const handleChange = (inputValue: string) => {
-    setSearch(inputValue)
-  }
   useEffect(() => {
     if (search === '') {
       setMovies(null)
@@ -42,5 +38,5 @@ export function useSearchMovie() {
     }
   }, [data])
 
-  return { movies, isError, isLoading, handleChange }
+  return { movies, isError, isLoading }
 }

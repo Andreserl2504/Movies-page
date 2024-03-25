@@ -1,23 +1,36 @@
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { imdbID } from '../Types/GeneralTypes'
 import { searchImdb } from '../services/searchImdb'
 import { MoviesFetchImdbID } from '../Types/moviesInfo'
 import { MoviesFetchType } from '../Types/Discover'
+import { getFromServer } from '../services/getFromServer'
+import { useParams } from 'react-router-dom'
 
 export function useSearchImdb() {
+  const { username, imdbID } = useParams()
   const [favMovies, setFavMovies] = useState<MoviesFetchType[] | null>(null)
-  const moviesTest: imdbID[] = ['tt5311514', 'tt14230458', 'tt0903747']
-  const { data, isLoading, isError } = useQuery<MoviesFetchImdbID[]>({
+  const { data, isLoading, isError, refetch } = useQuery<MoviesFetchImdbID[]>({
     queryKey: ['imdb'],
     queryFn: async () => {
-      return Promise.all(
-        Array.from({ length: moviesTest.length }, (_, i) =>
-          searchImdb({ imdbID: moviesTest[i] })
+      if (username) {
+        const { favoritesID } = await getFromServer({
+          URLServer: `/server/movie/lists/${username}`
+        })
+        return Promise.all(
+          Array.from({ length: favoritesID.length }, (_, i) =>
+            searchImdb({ imdbID: favoritesID[i] })
+          )
         )
-      )
+      } else {
+        return searchImdb({ imdbID: imdbID })
+      }
     }
   })
+  useEffect(() => {
+    if (favMovies || imdbID) {
+      refetch()
+    }
+  }, [username, refetch, favMovies, imdbID])
   useEffect(() => {
     if (data && data?.length > 0) {
       setFavMovies(
@@ -34,8 +47,10 @@ export function useSearchImdb() {
           }
         })
       )
+    } else if (data && data.length === 0) {
+      setFavMovies([])
     }
   }, [data])
 
-  return { favMovies }
+  return { favMovies, isLoading, isError }
 }

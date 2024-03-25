@@ -57,7 +57,13 @@ export class UserController {
   static async getUsers(req, res) {
     try {
       const user = req.params.user
-      const { queryResult } = await UserModel.getUserForMenu({ userLog: user })
+      let { queryResult } = await UserModel.getUserForMenu({ userLog: user })
+      for (let i = 0; i < queryResult.length; i++) {
+        queryResult[i].isFollowing = await UserModel.isFollowing({
+          username: queryResult[i].username,
+          follower: user
+        })
+      }
       res.json({ queryResult })
     } catch (e) {
       res.status(500).send(e.message)
@@ -80,14 +86,20 @@ export class UserController {
     try {
       const username = req.params.username
       const follower = req.params.follower
+      const usernameArray = username.split(',')
       if (username && username !== follower) {
-        const { isFollowing } = await UserModel.isFollowing({
-          username: username,
-          follower: follower
-        })
+        const isFollowing = []
+        for (let i = 0; i < usernameArray.length; i++) {
+          isFollowing.push(
+            await UserModel.isFollowing({
+              username: usernameArray[i],
+              follower: follower
+            })
+          )
+        }
         res.json({ isFollowing: isFollowing })
       } else {
-        res.json({ isFollowing: false })
+        res.json({ isFollowing: [false] })
       }
     } catch (e) {
       res.status(500).send(e.message)

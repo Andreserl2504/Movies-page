@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useUser } from './useUser'
 import { useQuery } from '@tanstack/react-query'
 import { getFromServer } from '../services/getFromServer'
-import { UserQueryType } from '../Types/Discover'
+import { MenuUserType, UserQueryType } from '../Types/Discover'
 
 export function useUserMenu() {
   const { userInfo } = useUser()
@@ -11,7 +11,9 @@ export function useUserMenu() {
     isLoading: undefined,
     isError: undefined
   })
-  const { data, isLoading, isError, refetch } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery<{
+    queryResult: MenuUserType[]
+  }>({
     queryKey: ['queryResult'],
     queryFn: async () =>
       await getFromServer({
@@ -37,6 +39,5 @@ export function useUserMenu() {
       }))
     }
   }, [data, isError, isLoading])
-
   return { menuUser, isLoading, isError }
 }
