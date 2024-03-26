@@ -1,9 +1,8 @@
-import { ArrowLeftIcon } from '@heroicons/react/16/solid'
-import { Link } from 'react-router-dom'
 import { Button, Spinner } from '@material-tailwind/react'
 import { UserType } from '../../Types/User'
 import { useUserProfile } from '../../hooks/useUserProfile'
 import { AvatarUsers } from '../AvatarComponents/AvatarUsers'
+import { BackBar } from '../globalComponents/BackBar'
 
 export function UserProfileInfo({
   userInfo,
@@ -18,18 +17,13 @@ export function UserProfileInfo({
     <>
       {userProfile?.profileInfo?.id && !isLoading && !isError ? (
         <>
-          <section className=' flex flex-row items-center gap-5'>
-            <Link to={'/'}>
-              <button className=' h-14 w-14 flex justify-center items-center'>
-                <ArrowLeftIcon className=' w-7' />
-              </button>
-            </Link>
-            <strong>
-              {userProfile.profileInfo.nickname
+          <BackBar
+            tag={
+              userProfile.profileInfo.nickname
                 ? userProfile.profileInfo.nickname
-                : userProfile.profileInfo.username}
-            </strong>
-          </section>
+                : userProfile.profileInfo.username
+            }
+          />
 
           <main className=' flex flex-col justify-center relative w-full min-h-72 gap-5 border-b-2'>
             <div className='absolute top-0 w-full h-28  bg-blue-500'></div>

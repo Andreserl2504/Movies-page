@@ -9,6 +9,7 @@ import {
 import { useSearchImdb } from '../../hooks/useSearchImdb'
 import { useState } from 'react'
 import { ItemListMovie } from '../globalComponents/ItemListMovie'
+import { useParams } from 'react-router-dom'
 
 const CUSTOM_ANIMATION = {
   mount: { scale: 1 },
@@ -17,7 +18,8 @@ const CUSTOM_ANIMATION = {
 
 export function ProfileListFav() {
   const [open, setOpen] = useState(0)
-  const { favMovies } = useSearchImdb()
+  const { username } = useParams()
+  const { favMovies } = useSearchImdb({ searchFromServer: true, username: username})
   const handleOpen = (value: number) => setOpen(open === value ? 0 : value)
   return (
     <>

@@ -6,6 +6,7 @@ import {
   Rating
 } from '@material-tailwind/react'
 import { MoviesFetchType } from '../../Types/Discover'
+import { GenreTags } from './GenresTags'
 
 export function ItemListMovie({ movies }: { movies: MoviesFetchType[] }) {
   return (
@@ -32,18 +33,11 @@ export function ItemListMovie({ movies }: { movies: MoviesFetchType[] }) {
                     />
                   )}
                 </div>
-                <span>{movie.year}</span>
+                <span>{movie.year[movie.year.length - 1] === '–'
+                      ? movie.year.replace('–', '')
+                      : movie.year}</span>
                 <span className=' flex gap-3'>
-                  {movie.genre &&
-                    movie.genre?.map((genre) => (
-                      <Chip
-                        key={genre}
-                        value={genre}
-                        variant='ghost'
-                        size='sm'
-                        className='rounded-full'
-                      />
-                    ))}
+                  <GenreTags genres={movie.genre}/>
                 </span>
               </div>
             </div>
