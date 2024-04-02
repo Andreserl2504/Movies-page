@@ -8,6 +8,7 @@ export type UserContextType = {
   setSwitchUserMirror: Dispatch<SetStateAction<boolean>>
   isLoading: boolean
   userToBackend: (userInfoInput: UserInfoType, param: FetchUserParameter) => void
+  logOut: () => void
 }
 
 

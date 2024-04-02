@@ -2,26 +2,24 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { searchImdb } from '../services/searchImdb'
 import { MoviesFetchImdbID } from '../Types/moviesInfo'
-import { MoviesFetchType } from '../Types/Discover'
+import { MoviesFetchType, MoviesPageType } from '../Types/Discover'
 import { getFromServer } from '../services/getFromServer'
 
 export function useSearchImdb({
-  imdbID,
-  searchFromServer,
-  username
+  search,
+  searchFromServer
 }: {
-  imdbID?: (string | undefined)[]
+  search: (string | undefined)[] | string | undefined
   searchFromServer?: boolean
-  username?: string | undefined
 }) {
-  const [moviesInfo, setMovieInfo] = useState<MoviesFetchType[] | null>(null)
+  const [moviesInfo, setMovieInfo] = useState<MoviesPageType[] | null>(null)
   const [favMovies, setFavMovies] = useState<MoviesFetchType[] | null>(null)
   const { data, isLoading, isError, refetch } = useQuery<MoviesFetchImdbID[]>({
-    queryKey: ['imdb'],
+    queryKey: [],
     queryFn: async () => {
-      if (searchFromServer) {
+      if (searchFromServer && search) {
         const { favoritesID } = await getFromServer({
-          URLServer: `/server/movie/lists/${username}`
+          URLServer: `/server/movie/lists/${search}`
         })
         return Promise.all(
           Array.from({ length: favoritesID.length }, (_, i) =>
@@ -29,19 +27,21 @@ export function useSearchImdb({
           )
         )
       } else {
+        console.log('hi')
         return Promise.all(
-          Array.from({ length: imdbID?.length }, (_, i) =>
-            searchImdb({ imdbID: imdbID[i] })
+          Array.from({ length: search?.length ?? 3 }, (_, i) =>
+            searchImdb({ imdbID: search ? search[i] : undefined})
           )
         )
       }
     }
   })
+
   useEffect(() => {
-    if (favMovies || imdbID || username) {
+    if (search) {
       refetch()
     }
-  }, [username, refetch, favMovies, imdbID])
+  }, [refetch, search])
   useEffect(() => {
     if (data && data.length > 0) {
       if (searchFromServer) {
@@ -65,12 +65,17 @@ export function useSearchImdb({
             return {
               imdbID: data[i].imdbID,
               title: data[i].Title,
-              year: data[i].Year,
+              year: data[i].Released,
               duration: data[i].Runtime,
               genre: data[i].Genre.split(', '),
               poster: data[i].Poster,
-              imdbRating: data[i].imdbRating,
-              type: data[i].Type
+              type: data[i].Type,
+              rating: data[i].Ratings,
+              plot: data[i].Plot,
+              director: data[i].Director,
+              writer: data[i].Writer,
+              country: data[i].Country,
+              awards: data[i].Awards
             }
           })
         )

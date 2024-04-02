@@ -7,6 +7,9 @@ export function Feed() {
   return (
     <div className=' min-w-[600px] border-x-2'>
       <div>{userInfo.userID !== null ? <InputPost /> : <NoInputPost />}</div>
+      <main>
+
+      </main>
     </div>
   )
 }

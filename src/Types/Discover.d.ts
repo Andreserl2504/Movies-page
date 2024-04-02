@@ -1,5 +1,6 @@
 import { genres, imdbID, type } from './GeneralTypes'
 import { UUIDType } from './User'
+import { Rating } from './moviesInfo'
 
 //Carrousel
 
@@ -62,4 +63,20 @@ export type MoviesFetchType = {
   duration?: string
   genre?: string[]
   imdbRating?: string
+}
+
+export type MoviesPageType = {
+  imdbID: imdbID
+  title: string
+  year: string
+  poster: string
+  type: type
+  duration?: string
+  genre?: string[]
+  rating: Rating[]
+  plot: string
+  director: string
+  writer: string
+  country: string
+  awards: string
 }

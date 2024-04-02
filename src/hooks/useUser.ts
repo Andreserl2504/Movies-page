@@ -10,6 +10,7 @@ export function useUser() {
     switchUserMirror,
     setLogUserMirror,
     setSwitchUserMirror,
+    logOut,
     userToBackend
   } = useContext(UserContext) as UserContextType
 
@@ -56,6 +57,7 @@ export function useUser() {
     setSwitchUserMirror,
     setInputError,
     setLogInputs,
-    sendInfoUser
+    sendInfoUser,
+    logOut
   }
 }

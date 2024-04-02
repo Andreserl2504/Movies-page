@@ -4,11 +4,12 @@ import { getFromServer } from '../services/getFromServer'
 import { useQuery } from '@tanstack/react-query'
 import { userProfileType } from '../Types/Discover'
 import { useFollowButton } from './useFollowButton'
-
+import { useUser } from './useUser'
 
 export function useUserProfile() {
   const { username } = useParams()
-  const { isFollowing } = useFollowButton({ username: [username]})
+  const { isFollowing } = useFollowButton({ username: [username] })
+  const { logOut } = useUser()
   const [userProfile, setUserProfile] = useState<userProfileType>({
     profileInfo: {
       id: null,
@@ -35,7 +36,7 @@ export function useUserProfile() {
   }, [refetch, username])
   useEffect(() => {
     if (data?.profileInfo?.id) {
-      setUserProfile(prevState => ({
+      setUserProfile((prevState) => ({
         ...prevState,
         profileInfo: {
           id: data.profileInfo.id,
@@ -45,9 +46,9 @@ export function useUserProfile() {
           description: data.profileInfo.description
         },
         following: data.following,
-        followers: data.followers,
+        followers: data.followers
       }))
     }
   }, [data])
-  return { userProfile, isLoading, isError, isFollowing }
+  return { userProfile, isLoading, isError, isFollowing, logOut }
 }

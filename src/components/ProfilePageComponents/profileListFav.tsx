@@ -19,7 +19,7 @@ const CUSTOM_ANIMATION = {
 export function ProfileListFav() {
   const [open, setOpen] = useState(0)
   const { username } = useParams()
-  const { favMovies } = useSearchImdb({ searchFromServer: true, username: username})
+  const { favMovies } = useSearchImdb({ searchFromServer: true, search: username})
   const handleOpen = (value: number) => setOpen(open === value ? 0 : value)
   return (
     <>

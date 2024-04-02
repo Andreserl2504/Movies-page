@@ -14,7 +14,6 @@ import { useState } from 'react'
 export function MenuSelectMovie() {
   const [search, setSearch] = useState('')
   const { movies, isLoading, isError } = useSearchMovie(search)
-  console.log(movies)
   return (
     <Menu
       dismiss={{

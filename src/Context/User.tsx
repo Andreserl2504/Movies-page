@@ -61,7 +61,17 @@ export function UserProvider({ children }: { children: ReactNode }) {
       console.log(data.message)
     }
   }, [data])
-
+  const logOut = () => {
+    if (cookieID.current.get('userIDToken')) {
+      cookieID.current.remove('userIDToken')
+    }
+    setUserInfo({
+      userID: null,
+      username: null,
+      nickname: null,
+      imgProfile: null
+    })
+  }
   return (
     <UserContext.Provider
       value={{
@@ -69,9 +79,11 @@ export function UserProvider({ children }: { children: ReactNode }) {
         isLoading,
         logUserMirror,
         switchUserMirror,
+        cookieID,
         setLogUserMirror,
         setSwitchUserMirror,
-        userToBackend
+        userToBackend,
+        logOut
       }}
     >
       {children}
