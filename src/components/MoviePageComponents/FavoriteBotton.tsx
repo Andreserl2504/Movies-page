@@ -17,11 +17,12 @@ export function FavoriteBotton() {
           ? 'shadow-md shadow-blue-400 hover:shadow-lg hover:shadow-blue-400 p-2'
           : 'p-2'
       }
+      onClick={isInList ? removeToList : addToList}
     >
       {isInList && !isLoading && !isError ? (
-        <StarSolid className='w-7 fill-blue-400' onClick={removeToList} />
+        <StarSolid className='w-7 fill-blue-400' />
       ) : !isInList && !isLoading && !isError ? (
-        <StarOutline className='w-7' onClick={addToList} />
+        <StarOutline className='w-7' />
       ) : (
         <>{isLoading && !isError ? <Spinner /> : 'error'}</>
       )}

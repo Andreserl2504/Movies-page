@@ -1,0 +1,50 @@
+[
+  {
+    "postID": "lkajsdkajsldk",
+    "username": "rau",
+    "nickname": "raugod",
+    "profileImg": "https://i.pinimg.com/564x/6e/52/c7/6e52c7fe2447e34bc447b027cc20ea7d.jpg",
+    "date": "1d",
+    "isFollowing": true,
+    "content": "bua",
+    "imdbID": "tt0388629",
+    "likes": 5,
+    "comments": [
+      {
+        "postID": "a0s98da08sd",
+        "username": "andre",
+        "nickname": "andre 🐈",
+        "profileImg": "https://i.pinimg.com/originals/57/72/d2/5772d2ec3616422ea218847f689244d5.png",
+        "date": "tal",
+        "isFollowing": false,
+        "content": "no sé mano que fastidio, tiene muchos capitulos qwq",
+        "imdbID": null,
+        "likes": 2
+      }
+    ]
+  },
+  {
+    "postID": "lkajsdka8s0d98a0s8d09ajsldk",
+    "username": "andre",
+    "nickname": "andre 🐈",
+    "profileImg": "https://i.pinimg.com/originals/57/72/d2/5772d2ec3616422ea218847f689244d5.png",
+    "date": "1d",
+    "isFollowing": true,
+    "content": "👎",
+    "imdbID": "tt0388629",
+    "likes": 5,
+    "comments": [
+      {
+        "postID": "a0s98da08sd",
+        "username": "gabrie",
+        "nickname": "gabrieelduro",
+        "profileImg": "https://i.pinimg.com/originals/ee/3c/ce/ee3cceed67a8e31288ea050efb351318.jpg",
+        "date": "tal",
+        "isFollowing": false,
+        "content": "🙏",
+        "imdbID": null,
+        "likes": 2
+      }
+    ]
+  }
+]
