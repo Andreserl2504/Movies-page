@@ -8,40 +8,12 @@ import {
   ListItemSuffix,
   Chip
 } from '@material-tailwind/react'
+import { useId } from 'react'
 import { useSearchMovie } from '../../../hooks/useSearchMovie'
-import { useState } from 'react'
-import { MoviesFetchType } from '../../../Types/Discover'
-import { MoviesFetch } from '../../../Types/querySearchParameter'
 
 export function MenuSelectMovie() {
-  const [movies, setMovies] = useState<MoviesFetchType[] | null>(null)
-  const [search, setSearch] = useState<string | null>(null)
-  const handleChange = (search: string) => {
-    setSearch(search)
-  }
-  const handelChangeData = (fetch: MoviesFetch | null) => {
-    if (fetch) {
-      setMovies(
-        Array.from({ length: fetch.Search.length }, (_, i) => {
-          return {
-            imdbID: fetch.Search[i].imdbID,
-            title: fetch.Search[i].Title,
-            poster: fetch.Search[i].Poster,
-            type: fetch.Search[i].Type,
-            year: fetch.Search[i].Year
-          }
-        })
-          .filter((movie) => movie.poster !== 'N/A')
-          .splice(0, 5)
-      )
-    } else {
-      setMovies(fetch)
-    }
-  }
-  const { isLoading, isError } = useSearchMovie({
-    search: search,
-    handleChangeData: handelChangeData
-  })
+  const menuID = useId()
+  const { movies, isLoading, isError, handleChange } = useSearchMovie(menuID)
   return (
     <Menu
       dismiss={{
@@ -70,7 +42,7 @@ export function MenuSelectMovie() {
             !isLoading &&
             !isError &&
             movies.map((movie) => (
-              <MenuItem placeholder={undefined}>
+              <MenuItem placeholder={undefined} key={movie.imdbID}>
                 <div className='flex flex-nowrap justify-between gap-5'>
                   <div className='flex flex-nowrap gap-5'>
                     <span className=' w-10'>
