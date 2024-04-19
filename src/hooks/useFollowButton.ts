@@ -1,32 +1,55 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { getFromServer } from '../services/getFromServer'
-import { useUser } from './useUser'
+import { postFromServer } from '../services/postFromServer'
+import { deleteFromServer } from '../services/deleteFromServer'
 
-export function useFollowButton({ username }: { username: (string | undefined)[] }) {
-  const { userInfo } = useUser()
-  const [isFollowing, setIsFollowing] = useState<boolean[]>([false])
-  const { data, refetch } = useQuery<
-    {
-      isFollowing: boolean[]
-    }
-  >({
+export function useFollowButton({
+  follower,
+  following
+}: {
+  follower: string
+  following: string
+}) {
+  const [isFollowing, setIsFollowing] = useState<boolean>(false)
+  const { data, refetch } = useQuery<{
+    isFollowing: boolean
+  }>({
     queryKey: ['isFollowing'],
     queryFn: async () =>
       getFromServer({
-        URLServer: `/server/user/isFollowing/${username.toString()}/${userInfo.username}`
+        URLServer: `/server/user/isFollowing/${following}/${follower}`
+      }),
+    enabled: !!following
+  })
+
+  const follow = useMutation({
+    mutationFn: async (body: object) => {
+      await postFromServer({
+        serverURL: '/server/user/follow',
+        body: body
       })
+    }
+  })
+
+  const unFollow = useMutation({
+    mutationFn: async (body: object) => {
+      await deleteFromServer({
+        serverURL: '/server/user/unfollow',
+        body: body
+      })
+    }
   })
 
   useEffect(() => {
-    if (username) {
+    if (following) {
       refetch()
     }
-  }, [refetch, username])
+  }, [refetch, following])
   useEffect(() => {
     if (data) {
       setIsFollowing(data.isFollowing)
     }
   }, [data])
-  return { isFollowing }
+  return { isFollowing, follow, unFollow, refetch }
 }

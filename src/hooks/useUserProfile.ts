@@ -3,12 +3,10 @@ import { useParams } from 'react-router-dom'
 import { getFromServer } from '../services/getFromServer'
 import { useQuery } from '@tanstack/react-query'
 import { userProfileType } from '../Types/Discover'
-import { useFollowButton } from './useFollowButton'
 import { useUser } from './useUser'
 
 export function useUserProfile() {
   const { username } = useParams()
-  const { isFollowing } = useFollowButton({ username: [username] })
   const { logOut } = useUser()
   const [userProfile, setUserProfile] = useState<userProfileType>({
     profileInfo: {
@@ -19,8 +17,7 @@ export function useUserProfile() {
       description: null
     },
     following: null,
-    followers: null,
-    isFollowing: isFollowing
+    followers: null
   })
   const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ['profileInfo'],
@@ -36,8 +33,7 @@ export function useUserProfile() {
   }, [refetch, username])
   useEffect(() => {
     if (data?.profileInfo?.id) {
-      setUserProfile((prevState) => ({
-        ...prevState,
+      setUserProfile({
         profileInfo: {
           id: data.profileInfo.id,
           username: data.profileInfo.username,
@@ -47,8 +43,8 @@ export function useUserProfile() {
         },
         following: data.following,
         followers: data.followers
-      }))
+      })
     }
   }, [data])
-  return { userProfile, isLoading, isError, isFollowing, logOut }
+  return { userProfile, isLoading, isError, logOut }
 }

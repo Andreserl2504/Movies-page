@@ -3,11 +3,18 @@ import { NoInputPost } from './FeedComponents/NoInputPost'
 import { useUser } from '../hooks/useUser'
 import json from '../mocks/postJSON.json'
 import {
+  Avatar,
   Card,
   CardBody,
   CardHeader,
   List,
   ListItem,
+  Timeline,
+  TimelineBody,
+  TimelineConnector,
+  TimelineHeader,
+  TimelineIcon,
+  TimelineItem,
   Typography
 } from '@material-tailwind/react'
 import { FollowButton } from './globalComponents/FollowBtn'
@@ -17,7 +24,7 @@ import { Link } from 'react-router-dom'
 export function Feed() {
   const { userInfo } = useUser()
   return (
-    <div className=' min-w-[600px] border-x-2'>
+    <div className=' lg:min-w-fit lg:border-x-2'>
       <div>{userInfo.userID !== null ? <InputPost /> : <NoInputPost />}</div>
       <main>
         <List placeholder={undefined}>
@@ -55,7 +62,15 @@ export function Feed() {
                         <span color='blue-gray'>{`@${post.username}`}</span>
                       </div>
                       <div className='5 flex items-center gap-0'>
-                        <FollowButton isFollowing={post.isFollowing} />
+                        <FollowButton
+                          isFollowing={post.isFollowing}
+                          handleFollow={function (): void {
+                            throw new Error('Function not implemented.')
+                          }}
+                          handleUnFollown={function (): void {
+                            throw new Error('Function not implemented.')
+                          }}
+                        />
                       </div>
                     </div>
                   </CardHeader>
@@ -111,11 +126,61 @@ export function Feed() {
                     </Link>
                   </div>
                 </Card>
-                <div className=' flex gap-5'>
+                <div className=' flex gap-5 mb-10'>
                   <strong>like</strong>
                   <strong>comment</strong>
                 </div>
               </div>
+              {post.comments.length > 0 && (
+                <section className=' flex w-full flex-col'>
+                  <Timeline>
+                    {post.comments.map((comment) => (
+                      <TimelineItem key={comment.postID} className=' w-full'>
+                        <TimelineConnector />
+                        <TimelineHeader>
+                          <TimelineIcon className='p-0'>
+                            <Avatar
+                              size='sm'
+                              className='border-blue-500'
+                              src={comment.profileImg}
+                              alt='user 1'
+                              withBorder
+                              placeholder={undefined}
+                            />
+                          </TimelineIcon>
+                          <div className='flex flex-col'>
+                            <Typography
+                              variant='h6'
+                              color='blue-gray'
+                              placeholder={undefined}
+                            >
+                              {comment.nickname}
+                            </Typography>
+                            <Typography
+                              color='blue-gray'
+                              placeholder={undefined}
+                            >
+                              {`@${comment.username}`}
+                            </Typography>
+                          </div>
+                        </TimelineHeader>
+                        <TimelineBody className='pb-8'>
+                          <Typography
+                            color='gray'
+                            className=' text-sm text-gray-600'
+                            placeholder={undefined}
+                          >
+                            {comment.content}
+                          </Typography>
+                        </TimelineBody>
+                      </TimelineItem>
+                    ))}
+                  </Timeline>
+                  <div className=' w-full border-blue-500 border-2 text-blue-500 p-5 rounded-lg'>
+                    <strong>Load more comments</strong>
+                  </div>
+                </section>
+              )}
             </ListItem>
           ))}
         </List>

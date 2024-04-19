@@ -6,21 +6,25 @@ import { UserPage } from './Pages/UserPage'
 import { SingLogForm } from './components/SingLog'
 import { Discover } from './components/Discover'
 import { MoviesPages } from './Pages/MoviesPage'
+import { NavBarRes } from './components/responsive/NavBarRes'
 
 export function App() {
   return (
-    <Router>
-      <NavBar />
-      <SingLogForm />
-      <main className='flex gap-10'>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/user/:username' element={<UserPage />} />
-          <Route path='/discover/:imdbID' element={<MoviesPages/>} />
-          <Route path='/*' element={<NotFound />} />
-        </Routes>
-        <Discover />
-      </main>
-    </Router>
+    <div className=' flex w-screen flex-auto'>
+      <Router>
+        <NavBar />
+        <NavBarRes />
+        <SingLogForm />
+        <main className='flex gap-10 mb-20'>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/user/:username' element={<UserPage />} />
+            <Route path='/discover/:imdbID' element={<MoviesPages />} />
+            <Route path='/*' element={<NotFound />} />
+          </Routes>
+          <Discover />
+        </main>
+      </Router>
+    </div>
   )
 }

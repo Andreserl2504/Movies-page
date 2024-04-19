@@ -14,7 +14,7 @@ export function NavBar() {
   const { userInfo } = useUser()
   return (
     <Navbar
-      className=' h-screen p-5 rounded-none w-24 shadow-none sticky top-0'
+      className='lg:block h-screen p-5 rounded-none w-24 shadow-none sticky top-0 ml-20 hidden'
       blurred={false}
       placeholder={undefined}
     >

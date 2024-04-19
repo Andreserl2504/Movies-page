@@ -8,8 +8,8 @@ export function Discover() {
   const inputID = useId()
   const { movies, isLoading, isError, handleChange } = useSearchMovie(inputID)
   return (
-    <div className='flex flex-col gap-5 w-full p-5'>
-      <div className='flex gap-5 flex-col relative'>
+    <div className='lg:flex p-5 hidden flex-col gap-5 '>
+      <div className='flex gap-5 flex-col relative max-w-52'>
         <Input
           onChange={(e) => handleChange(e.target.value)}
           crossOrigin={undefined}

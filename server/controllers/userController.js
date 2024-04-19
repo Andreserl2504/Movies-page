@@ -86,21 +86,23 @@ export class UserController {
     try {
       const username = req.params.username
       const follower = req.params.follower
-      const usernameArray = username.split(',')
       if (username && username !== follower) {
-        const isFollowing = []
-        for (let i = 0; i < usernameArray.length; i++) {
-          isFollowing.push(
-            await UserModel.isFollowing({
-              username: usernameArray[i],
-              follower: follower
-            })
-          )
-        }
+        const isFollowing = await UserModel.isFollowing({
+          username: username,
+          follower: follower
+        })
         res.json({ isFollowing: isFollowing })
-      } else {
-        res.json({ isFollowing: [false] })
       }
+    } catch (e) {
+      res.status(500).send(e.message)
+    }
+  }
+  static async follow(req, res) {
+    try {
+      UserModel.Follow({
+        followerID: req.body.followerID,
+        followingID: req.body.followingID
+      })
     } catch (e) {
       res.status(500).send(e.message)
     }

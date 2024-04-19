@@ -7,6 +7,7 @@ import {
 import { userFetch } from '../services/userFetch'
 import { useQuery } from '@tanstack/react-query'
 import Cookies from 'universal-cookie'
+import { redirect } from 'react-router-dom'
 
 export const UserContext = createContext<UserContextType | null>(null)
 
@@ -71,6 +72,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
       nickname: null,
       imgProfile: null
     })
+    redirect('/')
   }
   return (
     <UserContext.Provider

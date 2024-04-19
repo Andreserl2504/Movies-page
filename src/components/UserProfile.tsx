@@ -9,7 +9,7 @@ export function UserProfile() {
   const { username } = useParams()
   const { userInfo } = useUser()
   return (
-    <div className='min-w-[600px] border-x-2'>
+    <div className='lg:min-w-[600px] lg:border-x-2 w-full'>
       {userInfo.userID && username ? (
         <>
           <UserProfileInfo param={username} userInfo={userInfo} />

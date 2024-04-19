@@ -12,22 +12,22 @@ export function NoInputPost() {
     setLogUserMirror(true)
   }
   return (
-    <div className=' h-40 border-b-2 p-5 gap-5'>
-      <span className='text-3xl font-bold'>
+    <div className=' lg:h-40  border-b-2 p-5 gap-5'>
+      <span className='lg:text-3xl text-xl font-bold'>
         Sign up or Log in to write your first review!!
       </span>
       <div className='flex gap-5 justify-end'>
         <Button
           color='blue'
           placeholder={undefined}
-          className='text-base py-2'
+          className='lg:text-base py-2 text-sm'
           onClick={handleSingUp}
         >
           Sign up
         </Button>
         <Button
           placeholder={undefined}
-          className='text-base'
+          className='lg:text-base text-sm'
           onClick={handleLogIn}
         >
           Log in

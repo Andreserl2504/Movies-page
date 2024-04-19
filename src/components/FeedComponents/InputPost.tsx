@@ -9,7 +9,7 @@ export function InputPost() {
     setPercentage(length)
   }
   return (
-    <div className='flex flex-row h-44 border-b-2 [&_div]:h-full p-5 gap-3'>
+    <div className='sx:hidden sx:w-screen flex flex-row h-44 border-b-2 [&_div]:h-full p-5 gap-3'>
       <div className=' w-16 flex justify-center pt-3'>
         <AvatarProfile link={true} />
       </div>

@@ -10,6 +10,9 @@ userRouter.use('/', (req, res, next) =>
 userRouter.post('/', (req, res) =>
   UserController.logSingUserController(req, res)
 )
+
+userRouter.post('/follow', (req, res) => UserController.follow(req, res))
+
 userRouter.get('/menuUser/:user', (req, res) =>
   UserController.getUsers(req, res)
 )

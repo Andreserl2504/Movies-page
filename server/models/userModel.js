@@ -88,7 +88,7 @@ export class UserModel {
     try {
       const [queryResult] = await connection.query(
         `
-      SELECT username, nickname, profile_img FROM users WHERE username <> ? ORDER BY RAND() LIMIT 5
+      SELECT BIN_TO_UUID(id) id, username, nickname, profile_img FROM users WHERE username <> ? ORDER BY RAND() LIMIT 5
       `,
         [userLog]
       )
@@ -132,11 +132,9 @@ export class UserModel {
     try {
       const [isFollowing] = await connection.query(
         `SELECT BIN_TO_UUID(following_id) FROM followers
-        WHERE BIN_TO_UUID(following_id) = (SELECT BIN_TO_UUID(id) id FROM users 
-        WHERE username = ?)
+        WHERE BIN_TO_UUID(following_id) = ?
         AND
-        BIN_TO_UUID(follower_id) = (SELECT BIN_TO_UUID(id) id FROM users
-        WHERE username = ?)`,
+        BIN_TO_UUID(follower_id) = ?`,
         [username, follower]
       )
       if (isFollowing.length > 0) {
@@ -144,6 +142,19 @@ export class UserModel {
       } else {
         return false
       }
+    } catch (e) {
+      return new Error(e.message)
+    }
+  }
+  static async Follow({ followerID, followingID }) {
+    try {
+      await connection.query(
+        `
+        INSERT INTO followers (follower_id, following_id)
+        VALUES (UNHEX(REPLACE(?, '-', '')), UNHEX(REPLACE(?, '-', '')))
+      `,
+        [followerID, followingID]
+      )
     } catch (e) {
       return new Error(e.message)
     }

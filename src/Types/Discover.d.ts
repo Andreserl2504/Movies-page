@@ -51,7 +51,6 @@ export type userProfileType = {
   profileInfo: ProfileInfoType | null
   followers: number | null
   following: number | null
-  isFollowing: boolean[]
 }
 
 export type MoviesFetchType = {
