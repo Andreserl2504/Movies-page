@@ -22,10 +22,10 @@ export function UserProfileInfo({
   const [openProfileImage, setOpenProfileImage] = useState(false)
   const handleOpenProfileImage = () => setOpenProfileImage(!openProfileImage)
   const { userProfile, isLoading, isError, logOut } = useUserProfile()
-
+  console.log(userProfile)
   return (
     <>
-      {userProfile?.profileInfo?.id && !isLoading && !isError ? (
+      {!!userProfile?.profileInfo?.id && !isLoading && !isError ? (
         <>
           <BackBar
             tag={
@@ -91,7 +91,7 @@ export function UserProfileInfo({
                   </Button>
                 ) : (
                   <FollowButton
-                    follower={userInfo.userID ? userInfo.userID : ''}
+                    follower={userInfo.userID ?? ''}
                     following={userProfile.profileInfo.id}
                   />
                 )}

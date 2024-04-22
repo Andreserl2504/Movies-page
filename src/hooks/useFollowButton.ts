@@ -14,21 +14,29 @@ export function useFollowButton({
   const [isFollowing, setIsFollowing] = useState<boolean>(false)
   const { data, refetch } = useQuery<{
     isFollowing: boolean
+    queryID: string
   }>({
     queryKey: ['isFollowing'],
-    queryFn: async () =>
-      getFromServer({
-        URLServer: `/server/user/isFollowing/${following}/${follower}`
-      }),
-    enabled: !!following
+    queryFn: async () => {
+      const query =  {
+        isFollowing: await getFromServer({
+          URLServer: `/server/user/isFollowing/${following}/${follower}`
+        }),
+        queryID: following
+      }
+      console.log(query)
+      return query
+    },
+    enabled: !!following && !!follower
   })
 
   const follow = useMutation({
     mutationFn: async (body: object) => {
-      await postFromServer({
+      const isFollow = await postFromServer({
         serverURL: '/server/user/follow',
         body: body
       })
+      setIsFollowing(isFollow)
     }
   })
 
@@ -42,14 +50,15 @@ export function useFollowButton({
   })
 
   useEffect(() => {
-    if (following) {
-      refetch()
-    }
+    refetch()
   }, [refetch, following])
   useEffect(() => {
-    if (data) {
+    // console.log(data)
+    // console.log(following)
+    // console.log(follower)
+    if (data && data.queryID === following) {
       setIsFollowing(data.isFollowing)
     }
-  }, [data])
-  return { isFollowing, follow, unFollow, refetch }
+  }, [data, following])
+  return { isFollowing, follow, unFollow }
 }

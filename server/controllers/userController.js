@@ -58,12 +58,6 @@ export class UserController {
     try {
       const user = req.params.user
       let { queryResult } = await UserModel.getUserForMenu({ userLog: user })
-      for (let i = 0; i < queryResult.length; i++) {
-        queryResult[i].isFollowing = await UserModel.isFollowing({
-          username: queryResult[i].username,
-          follower: user
-        })
-      }
       res.json({ queryResult })
     } catch (e) {
       res.status(500).send(e.message)
@@ -84,14 +78,15 @@ export class UserController {
   }
   static async isFollowing(req, res) {
     try {
-      const username = req.params.username
+      const following = req.params.username
       const follower = req.params.follower
-      if (username && username !== follower) {
+      if (!!following && following !== follower) {
         const isFollowing = await UserModel.isFollowing({
-          username: username,
-          follower: follower
+          followingID: following,
+          followerID: follower
         })
-        res.json({ isFollowing: isFollowing })
+        console.log(isFollowing)
+        res.json(isFollowing)
       }
     } catch (e) {
       res.status(500).send(e.message)
@@ -99,7 +94,26 @@ export class UserController {
   }
   static async follow(req, res) {
     try {
-      UserModel.Follow({
+      const followingID = req.body.followingID
+      const followerID = req.body.followerID
+      if (!!followingID && followingID !== followerID) {
+        await UserModel.follow({
+          followerID: followerID,
+          followingID: followingID
+        })
+        const isFollowing = await UserModel.isFollowing({
+          followingID: followingID,
+          followerID: followerID
+        })
+        res.json(isFollowing)
+      }
+    } catch (e) {
+      res.status(500).send(e.message)
+    }
+  }
+  static async unFollow(req, res) {
+    try {
+      UserModel.unFollow({
         followerID: req.body.followerID,
         followingID: req.body.followingID
       })

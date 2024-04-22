@@ -27,10 +27,10 @@ export type SearchResultType = {
 // discoverContext
 
 type MenuUserType = {
+  id: string
   username: string
   nickname: string
   profile_img: string
-  isFollowing: boolean
 }
 
 type UserQueryType = {

@@ -128,15 +128,16 @@ export class UserModel {
       return new Error(e.message)
     }
   }
-  static async isFollowing({ username, follower }) {
+  static async isFollowing({ followingID, followerID }) {
     try {
       const [isFollowing] = await connection.query(
         `SELECT BIN_TO_UUID(following_id) FROM followers
         WHERE BIN_TO_UUID(following_id) = ?
         AND
         BIN_TO_UUID(follower_id) = ?`,
-        [username, follower]
+        [followingID, followerID]
       )
+      console.log(isFollowing)
       if (isFollowing.length > 0) {
         return true
       } else {
@@ -146,7 +147,7 @@ export class UserModel {
       return new Error(e.message)
     }
   }
-  static async Follow({ followerID, followingID }) {
+  static async follow({ followerID, followingID }) {
     try {
       await connection.query(
         `
@@ -154,6 +155,17 @@ export class UserModel {
         VALUES (UNHEX(REPLACE(?, '-', '')), UNHEX(REPLACE(?, '-', '')))
       `,
         [followerID, followingID]
+      )
+    } catch (e) {
+      return new Error(e.message)
+    }
+  }
+  static async unFollow({ followerID, followingID }) {
+    try {
+      connection.query(
+        `
+      DELETE FROM followers WHERE BIN_TO_UUID(follower_id) = ? AND BIN_TOUUD(following_id) = ?
+      `[(followerID, followingID)]
       )
     } catch (e) {
       return new Error(e.message)

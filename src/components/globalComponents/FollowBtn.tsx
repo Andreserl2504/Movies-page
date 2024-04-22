@@ -1,4 +1,4 @@
-import { Button } from '@material-tailwind/react'
+import { Button, Spinner } from '@material-tailwind/react'
 import { useFollowButton } from '../../hooks/useFollowButton'
 import { UUIDType } from '../../Types/User'
 
@@ -11,11 +11,11 @@ export function FollowButton({
   following: string | UUIDType
   className?: string
 }) {
-  const { isFollowing, follow, unFollow, refetch } = useFollowButton({
+  const { isFollowing, follow, unFollow } = useFollowButton({
     follower: follower,
     following: following
   })
-  console.log(isFollowing)
+  // console.log(following)
   return (
     <div>
       {isFollowing ? (
@@ -28,7 +28,7 @@ export function FollowButton({
         </Button>
       ) : (
         <Button
-          color={isFollowing ? 'black' : 'blue'}
+          color='blue'
           placeholder={undefined}
           className={className}
           onClick={() => {
@@ -36,7 +36,6 @@ export function FollowButton({
               followerID: follower,
               followingID: following
             })
-            refetch()
           }}
         >
           Follow

@@ -4,27 +4,31 @@ import {
   ListItemPrefix,
   Card,
   Typography,
-  Spinner,
-  Button
+  Spinner
 } from '@material-tailwind/react'
 import { AvatarUsers } from '../AvatarComponents/AvatarUsers'
 import { useUser } from '../../hooks/useUser'
 import { Link } from 'react-router-dom'
 import { useUserMenu } from '../../hooks/useUserMenu'
+import { FollowButton } from '../globalComponents/FollowBtn'
 
 export function UserMenu() {
-  const { menuUser } = useUserMenu()
+  const { menuUser, isLoading, isError } = useUserMenu()
   const { userInfo } = useUser()
+  // console.log(menuUser)
   return (
     <Card className='w-96' placeholder={undefined}>
-      <List placeholder={undefined}>
-        {menuUser.isLoading || menuUser.isLoading === undefined ? (
+      <List
+        placeholder={undefined}
+        className='flex justify-center items-center'
+      >
+        {isLoading && menuUser == undefined ? (
           <div className=' w-full'>
             <Spinner color='blue' className='h-10 w-10' />
           </div>
         ) : (
-          menuUser.userInfo?.map((info) => (
-            <Link key={info.username} to={`/user/${info.username}`}>
+          menuUser?.map((info) => (
+            <Link to={`/user/${info.username}`} className=' w-full' key={info.id}>
               <ListItem placeholder={undefined}>
                 <ListItemPrefix placeholder={undefined}>
                   <AvatarUsers
@@ -53,34 +57,10 @@ export function UserMenu() {
                     </Typography>
                   </div>
                   <div className='flex items-center'>
-                    {info.isFollowing ? (
-                      <>
-                        <Button
-                          className=' px-4'
-                          placeholder={undefined}
-                          onClick={() => console.log('hi')}
-                          disabled={
-                            userInfo.username === info.username ? true : false
-                          }
-                        >
-                          UnFollow
-                        </Button>
-                      </>
-                    ) : (
-                      <>
-                        <Button
-                          className=''
-                          color='blue'
-                          placeholder={undefined}
-                          onClick={() => console.log('hi')}
-                          disabled={
-                            userInfo.username === info.username ? true : false
-                          }
-                        >
-                          Follow
-                        </Button>
-                      </>
-                    )}
+                    <FollowButton
+                      follower={userInfo?.userID ? userInfo.userID : ''}
+                      following={info.id}
+                    />
                   </div>
                 </div>
               </ListItem>
