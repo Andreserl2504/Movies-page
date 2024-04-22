@@ -23,6 +23,7 @@ export function useUser() {
     token: false
   })
 
+  
   const sendInfoUser = (param: FetchUserParameter) => {
     if (
       logInputs.email?.includes('.com') &&
